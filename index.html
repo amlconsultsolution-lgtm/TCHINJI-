@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCHINJI — Échange de devises</title>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Roboto,Arial,sans-serif}
+        body{background:linear-gradient(135deg,#0F2758 0%,#2563EB 100%);min-height:100vh;padding:20px;display:flex;align-items:center;justify-content:center}
+        .container{width:100%;max-width:440px;background:#ffffff;border-radius:24px;padding:35px 28px;box-shadow:0 10px 40px rgba(0,0,0,0.25)}
+        .logo-section{text-align:center;margin-bottom:8px}
+        .logo-circle{width:90px;height:90px;background:linear-gradient(135deg,#0F2758,#2563EB);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;box-shadow:0 4px 15px rgba(37,99,235,0.35)}
+        .logo-text{font-size:38px;font-weight:900;color:#FFD700;letter-spacing:-1px}
+        h1{font-size:30px;color:#0F2758;font-weight:800;letter-spacing:1px;text-align:center;margin-bottom:5px}
+        .slogan{text-align:center;color:#64748B;font-size:15px;margin-bottom:32px}
+        .form-group{margin-bottom:20px}
+        label{display:block;margin-bottom:8px;font-weight:600;color:#334155;font-size:15px}
+        select,input{width:100%;padding:14px 16px;border:2px solid #E2E8F0;border-radius:12px;font-size:16px;background-color:#FAFBFC}
+        select:focus,input:focus{outline:none;border-color:#2563EB}
+        .btn-convertir{width:100%;background:linear-gradient(135deg,#0F2758,#2563EB);color:#ffffff;padding:16px;border:none;border-radius:12px;font-size:18px;font-weight:700;cursor:pointer;margin-top:5px;transition:transform 0.2s}
+        .btn-convertir:active{transform:scale(0.98)}
+        .resultat{margin-top:25px;padding:22px;background:#F0FDF4;border-radius:12px;display:none;border-left:4px solid #16A34A}
+        .resultat.visible{display:block;animation:fadeIn 0.4s ease}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .montant-converti{font-size:22px;font-weight:800;color:#166534;text-align:center;line-height:1.4}
+        .info-taux{text-align:center;margin-top:10px;font-size:12px;color:#78716C}
+        .footer{text-align:center;margin-top:30px;color:#ffffff;font-size:12px;opacity:0.8}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <div class="logo-circle"><span class="logo-text">T</span></div>
+            <h1>TCHINJI</h1>
+            <p class="slogan">Échange de devises — Rapide, Sécurisé & Local</p>
+        </div>
+
+        <div class="form-group">
+            <label>De cette devise :</label>
+            <select id="deviseDe">
+                <option value="XOF">🇨🇫 Franc CFA (XOF)</option>
+                <option value="NGN">🇳🇬 Naira Nigérian (NGN)</option>
+                <option value="USD">🇺🇸 Dollar US (USD)</option>
+                <option value="EUR">🇪🇺 Euro (EUR)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Vers cette devise :</label>
+            <select id="deviseVers">
+                <option value="NGN">🇳🇬 Naira Nigérian (NGN)</option>
+                <option value="XOF">🇨🇫 Franc CFA (XOF)</option>
+                <option value="USD">🇺🇸 Dollar US (USD)</option>
+                <option value="EUR">🇪🇺 Euro (EUR)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Montant à convertir :</label>
+            <input type="number" id="montant" placeholder="Ex: 10000" min="0" step="100">
+        </div>
+
+        <button class="btn-convertir" onclick="faireConversion()">🔄 Convertir</button>
+
+        <div class="resultat" id="blocResultat">
+            <p class="montant-converti" id="texteResultat"></p>
+            <p class="info-taux">Taux indicatif — Vérifiez le taux du marché du jour</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        TCHINJI — Échange de Devises © 2026<br>
+        Disponible à Maradi & Niamey
+    </div>
+
+    <script>
+        const TAUX = {
+            XOF: { NGN: 1.55, USD: 0.0016, EUR: 0.0015 },
+            NGN: { XOF: 0.65, USD: 0.0010, EUR: 0.00096 },
+            USD: { XOF: 620, NGN: 1550, EUR: 0.94 },
+            EUR: { XOF: 660, NGN: 1650, USD: 1.07 }
+        };
+
+        function faireConversion() {
+            const deviseDe = document.getElementById('deviseDe').value;
+            const deviseVers = document.getElementById('deviseVers').value;
+            const montant = parseFloat(document.getElementById('montant').value);
+            const blocResultat = document.getElementById('blocResultat');
+            const texteResultat = document.getElementById('texteResultat');
+
+            if (!montant || montant <= 0) {
+                alert('⚠️ Veuillez entrer un montant valide, exemple : 5000');
+                return;
+            }
+
+            let resultat;
+            if (deviseDe === deviseVers) {
+                resultat = montant;
+            } else {
+                resultat = montant * TAUX[deviseDe][deviseVers];
+            }
+
+            texteResultat.innerHTML = montant.toLocaleString('fr-FR') + ' ' + deviseDe + 
+                '<br>=<br>' + resultat.toLocaleString('fr-FR', {maximumFractionDigits: 2}) + ' ' + deviseVers;
+            
+            blocResultat.classList.add('visible');
+        }
+    </script>
+</body>
+</html>
