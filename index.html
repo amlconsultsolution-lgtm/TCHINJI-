@@ -6,10 +6,10 @@
     <meta name="theme-color" content="#008C45">
     <title>TCHINJI — Échanger • Investir • Envoyer</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        :root { --vert: #008C45; --vert-fonce: #006B34; --orange: #F59E0B; --bleu: #0284C7; --violet: #7C3AED; --rouge: #DC2626; --blanc: #fff; --gris: #f3f4f6; --gris-fonce: #4b5563; --noir: #1f2937; }
-        body { background: var(--gris); color: var(--noir); line-height: 1.6; padding-bottom: 90px; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        :root { --vert: #008C45; --vert-fonce: #006B34; --orange: #F59E0B; --bleu: #0284C7; --violet: #7C3AED; --rouge: #DC2626; --blanc: #fff; --gris: #f3f4f6; --gris-fonce: #4b5563; }
+        body { background: var(--gris); color: #1f2937; line-height: 1.6; }
+
         #lang-screen {
             position: fixed;
             top: 0;
@@ -24,89 +24,50 @@
             z-index: 9999;
             padding: 20px;
         }
-        #lang-screen h1 { color: white; font-size: 36px; margin-bottom: 10px; }
-        #lang-screen p { color: rgba(255,255,255,0.85); margin-bottom: 40px; text-align: center; font-size: 16px; }
-        .lang-btn { background: white; border: none; border-radius: 14px; padding: 18px 30px; width: 100%; max-width: 300px; font-size: 18px; font-weight: bold; color: var(--vert); cursor: pointer; margin: 10px 0; transition: all 0.3s ease; }
-        .lang-btn:active { transform: scale(0.98); }
-        
-        .lang-switcher { background: white; padding: 10px 15px; text-align: right; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .lang-switcher button { background: transparent; border: 1px solid var(--vert); color: var(--vert); padding: 6px 12px; border-radius: 20px; font-size: 14px; cursor: pointer; }
-        .lang-switcher button:active { background: var(--vert); color: white; }
-        
-        #change-lang-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 9998;
-            justify-content: center;
-            align-items: center;
+        #lang-screen h1 { color: white; font-size: 42px; margin-bottom: 10px; }
+        #lang-screen p { color: rgba(255,255,255,0.9); margin-bottom: 40px; font-size: 18px; }
+        .lang-btn { 
+            background: white; border: none; border-radius: 12px; 
+            padding: 18px 30px; width: 280px; margin: 10px auto;
+            font-size: 20px; font-weight: bold; color: var(--vert); 
+            cursor: pointer; display: block;
         }
-        #change-lang-modal.show { display: flex; }
-        .modal-content { background: white; padding: 30px 25px; border-radius: 16px; width: 90%; max-width: 320px; text-align: center; }
-        .modal-content h3 { margin-bottom: 20px; color: var(--vert); font-size: 20px; }
-        .close-btn { margin-top: 15px; background: #eee; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; }
-        
+
         #main-content { display: none; }
-        #main-content.visible { display: block; }
-        
+        #main-content.show { display: block; }
+
         header { background: linear-gradient(135deg, var(--vert), var(--vert-fonce)); color: white; padding: 25px 20px; text-align: center; }
         header h1 { font-size: 28px; margin-bottom: 5px; }
-        header p { font-size: 15px; opacity: 0.9; }
-        
-        nav { position: sticky; top: 0; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 100; }
+
+        nav { background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
         nav ul { display: flex; overflow-x: auto; list-style: none; padding: 0; }
         nav li { flex-shrink: 0; }
-        nav a { display: block; padding: 12px 10px; text-decoration: none; color: var(--noir); font-size: 12.5px; font-weight: 500; white-space: nowrap; }
+        nav a { display: block; padding: 12px 10px; text-decoration: none; color: #333; font-size: 14px; }
         nav a.active { border-bottom: 3px solid var(--vert); color: var(--vert); font-weight: bold; }
-        
+
         section { padding: 20px; display: none; }
         section.active { display: block; }
-        
         h2 { color: var(--vert); margin-bottom: 20px; font-size: 22px; }
-        h3 { font-size: 18px; margin: 18px 0 10px; color: var(--noir); }
-        h4 { font-size: 16px; margin: 12px 0 6px; }
-        
-        .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .card h3 { color: var(--vert); margin-top: 0; }
-        
-        .btn { display: block; background: var(--vert); color: white; padding: 14px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; text-align: center; border: none; font-size: 16px; cursor: pointer; margin: 10px 0; width: 100%; }
-        .btn:active { transform: scale(0.98); }
-        .btn-orange { background: var(--orange); }
+        h3 { font-size: 18px; margin: 20px 0 10px; }
+
+        .card { background: white; border-radius: 10px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+        .btn { display: block; background: var(--vert); color: white; padding: 14px; border-radius: 8px; text-decoration: none; font-weight: bold; text-align: center; border: none; font-size: 16px; margin: 10px 0; width: 100%; cursor: pointer; }
+        .btn-whatsapp { background: #25D366; }
         .btn-bleu { background: var(--bleu); }
+        .btn-orange { background: var(--orange); }
         .btn-violet { background: var(--violet); }
         .btn-exness { background: #FF6600; }
-        .btn-whatsapp { background: #25D366; }
-        
-        .info-box { background: #e0f2fe; border-left: 4px solid #0284C7; padding: 15px; margin: 15px 0; border-radius: 8px; font-size: 15px; }
-        .succes-box { background: #f0fdf4; border-left: 4px solid var(--vert); padding: 15px; margin: 15px 0; border-radius: 8px; font-size: 15px; }
-        .avert-box { background: #fffbeb; border-left: 4px solid var(--orange); padding: 15px; margin: 15px 0; border-radius: 8px; font-size: 15px; }
-        .danger-box { background: #fef2f2; border-left: 4px solid var(--rouge); padding: 15px; margin: 15px 0; border-radius: 8px; font-size: 15px; }
-        
-        .etape { display: flex; gap: 12px; margin: 15px 0; }
-        .etape-num { background: var(--vert); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
-        .etape-texte h4 { font-size: 15px; margin-bottom: 3px; }
-        .etape-texte p { font-size: 14px; color: var(--gris-fonce); }
-        
+
+        .succes-box { background: #f0fdf4; border-left: 4px solid var(--vert); padding: 15px; margin: 15px 0; border-radius: 6px; }
+        .info-box { background: #e0f2fe; border-left: 4px solid var(--bleu); padding: 15px; margin: 15px 0; border-radius: 6px; }
+        .avert-box { background: #fffbeb; border-left: 4px solid var(--orange); padding: 15px; margin: 15px 0; border-radius: 6px; }
+
         input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; }
         .resultat { font-size: 22px; font-weight: bold; color: var(--vert); text-align: center; padding: 15px; }
-        
-        .about-list p { margin: 10px 0; font-size: 15px; line-height: 1.7; }
-        .about-list strong { color: var(--vert); }
-        
+
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 0; }
-        .mini-card { background: var(--gris); padding: 15px; border-radius: 8px; text-align: center; }
-        .mini-card h4 { font-size: 14px; margin-bottom: 5px; }
-        .mini-card p { font-size: 13px; color: var(--gris-fonce); }
-        
-        .tag { display: inline-block; background: #e0f2fe; color: var(--bleu); padding: 4px 10px; border-radius: 12px; font-size: 12px; margin: 3px; }
-        .tag-vert { background: #dcfce7; color: var(--vert); }
-        .tag-orange { background: #fff7ed; color: var(--orange); }
-        .small-note { font-size: 13px; color: var(--gris-fonce); margin-top: 8px; }
-        .sgi-card { background: var(--gris); padding: 12px; border-radius: 8px; margin: 10px 0; }
+        .sgi-card { background: var(--gris); padding: 15px; border-radius: 6px; margin: 10px 0; }
+        .small-note { font-size: 13px; color: #6b7280; margin-top: 8px; }
     </style>
 </head>
 <body>
@@ -114,26 +75,10 @@
 <div id="lang-screen">
     <h1>🌍 TCHINJI</h1>
     <p>Choisis ta langue</p>
-    <button class="lang-btn" onclick="choisirLangue('fr')">🇫🇷 Français</button>
-    <button class="lang-btn" onclick="choisirLangue('ha')">🇳🇭 Haoussa</button>
-    <button class="lang-btn" onclick="choisirLangue('en')">🇬🇧 English</button>
-</div>
-
-<div id="change-lang-modal">
-    <div class="modal-content">
-        <h3>Choisis ta langue</h3>
-        <button class="lang-btn" onclick="choisirLangue('fr'); fermerModalLangue()">🇫🇷 Français</button>
-        <button class="lang-btn" onclick="choisirLangue('ha'); fermerModalLangue()">🇳🇭 Haoussa</button>
-        <button class="lang-btn" onclick="choisirLangue('en'); fermerModalLangue()">🇬🇧 English</button>
-        <button class="close-btn" onclick="fermerModalLangue()">✕ Fermer</button>
-    </div>
+    <button class="lang-btn" onclick="choisirLangue()">🇫🇷 Français</button>
 </div>
 
 <div id="main-content">
-
-<div class="lang-switcher">
-    <button onclick="ouvrirModalLangue()">🌍 Changer de langue</button>
-</div>
 
 <header>
     <h1>🌍 TCHINJI</h1>
@@ -142,64 +87,30 @@
 
 <nav>
     <ul>
-        <li><a href="#accueil" class="active" onclick="afficherSection('accueil')">Accueil</a></li>
-        <li><a href="#apropos" onclick="afficherSection('apropos')">À Propos</a></li>
-        <li><a href="#devises" onclick="afficherSection('devises')">Devises</a></li>
-        <li><a href="#trading" onclick="afficherSection('trading')">Trading</a></li>
-        <li><a href="#investir" onclick="afficherSection('investir')">Investir</a></li>
-        <li><a href="#prvm" onclick="afficherSection('prvm')">PRVM</a></li>
-        <li><a href="#services" onclick="afficherSection('services')">Envoyer</a></li>
-        <li><a href="#contact" onclick="afficherSection('contact')">Contact</a></li>
+        <li><a href="#accueil" class="active" onclick="afficherSection('accueil'); return false;">Accueil</a></li>
+        <li><a href="#devises" onclick="afficherSection('devises'); return false;">💱 Devises</a></li>
+        <li><a href="#trading" onclick="afficherSection('trading'); return false;">📈 Trading</a></li>
+        <li><a href="#investir" onclick="afficherSection('investir'); return false;">💰 Investir</a></li>
+        <li><a href="#prvm" onclick="afficherSection('prvm'); return false;">🛡️ PRVM</a></li>
+        <li><a href="#contact" onclick="afficherSection('contact'); return false;">📞 Contact</a></li>
     </ul>
 </nav>
 
 <section id="accueil" class="active">
     <h2>Bienvenue sur TCHINJI 👋</h2>
-    
     <div class="succes-box">
         <p>✅ Votre plateforme complète : Change de devises, Envoi d'argent, Trading, Investissement et PRVM.</p>
     </div>
-
     <div class="grid-2">
         <button class="btn" onclick="afficherSection('devises')">💱 Devises</button>
         <button class="btn btn-violet" onclick="afficherSection('trading')">📈 Trading</button>
         <button class="btn btn-orange" onclick="afficherSection('investir')">💰 Investir</button>
         <button class="btn btn-bleu" onclick="afficherSection('prvm')">🛡️ PRVM</button>
     </div>
-
-    <button class="btn" onclick="afficherSection('apropos')" style="margin-top:20px;">ℹ️ Découvrir TCHINJI</button>
-</section>
-
-<section id="apropos">
-    <h2>ℹ️ À Propos de TCHINJI</h2>
-    
-    <div class="card about-list">
-        <h3>🌍 Qu'est-ce que TCHINJI ?</h3>
-        <p>TCHINJI est votre plateforme de proximité qui regroupe plusieurs services essentiels au même endroit : échange de devises, envoi d'argent, informations sur les marchés financiers, opportunités d'investissement et protection de la valeur de votre argent (PRVM).</p>
-    </div>
-
-    <div class="card about-list">
-        <h3>📈 TRADING — Comprendre les marchés</h3>
-        <p>Le trading consiste à acheter et vendre des actifs pour profiter des variations de prix. TCHINJI vous oriente vers des plateformes régulées pour apprendre et pratiquer en toute sécurité.</p>
-        <p><span class="tag tag-vert">✅ Formation</span> <span class="tag tag-orange">⚠️ Risque à maîtriser</span> <span class="tag">📊 Informations</span></p>
-    </div>
-
-    <div class="card about-list">
-        <h3>💰 INVESTISSEMENT — Faire fructifier son argent</h3>
-        <p>Pour investir légalement et en toute sécurité au Niger, vous passez par une <strong>SGI — Société de Gestion d'Investissement</strong>, l'établissement régulé qui vous accompagne dans vos placements.</p>
-        <p><span class="tag tag-vert">✅ SGI agréée</span> <span class="tag">📊 Transparence</span> <span class="tag tag-orange">⏳ Sur le long terme</span></p>
-    </div>
-
-    <div class="card about-list">
-        <h3>🛡️ PRVM — Protection de la Valeur Monétaire</h3>
-        <p>Le PRVM est notre concept exclusif : protéger la valeur de votre argent contre l'inflation et les fluctuations des devises. Préservez votre pouvoir d'achat en suivant les tendances et en convertissant au bon moment.</p>
-        <p><span class="tag tag-vert">✅ Préservation</span> <span class="tag">📈 Suivi</span> <span class="tag tag-bleu">🔒 Sécurité</span></p>
-    </div>
 </section>
 
 <section id="devises">
     <h2>💱 Convertisseur de Devises</h2>
-    
     <div class="card">
         <h3>Calculez votre montant</h3>
         <input type="number" id="montant" placeholder="Montant" value="10000">
@@ -219,7 +130,6 @@
         <button class="btn" onclick="convertir()">Calculer</button>
         <div class="resultat" id="resultat">—</div>
     </div>
-    
     <div class="info-box">
         <p>💡 Ces taux sont indicatifs. Pour un échange réel, contactez-moi directement sur WhatsApp :</p>
         <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 Échanger sur WhatsApp</a>
@@ -228,155 +138,121 @@
 
 <section id="trading">
     <h2>📈 Trading — Marchés & Formations</h2>
-    
     <div class="avert-box">
         <p>⚠️ Important : TCHINJI ne demande JAMAIS d'argent pour faire du trading. Le trading comporte des risques importants. Ne tradez jamais que ce que vous pouvez perdre.</p>
     </div>
-
     <div class="card">
         <h3>📊 Tendances du Marché</h3>
         <p>Consultez gratuitement l'évolution des devises, de l'or et des marchés en temps réel pour prendre des décisions éclairées :</p>
         <a href="https://www.investing.com" target="_blank" class="btn btn-bleu">📊 Voir les tendances du marché</a>
-        <p class="small-note">Redirection vers Investing.com — plateforme d'informations financières indépendante</p>
+        <p class="small-note">Redirection vers Investing.com</p>
     </div>
-
     <div class="card">
-        <h3>🎓 Apprendre sans risque — Mode Démo</h3>
-        <p>Commencez par le compte démo pour vous former et comprendre le fonctionnement des marchés sans utiliser de l'argent réel. C'est la meilleure façon d'apprendre :</p>
+        <h3>🎓 Mode Démo — Apprendre sans risque</h3>
+        <p>Commencez par le compte démo pour vous former sans utiliser d'argent réel :</p>
         <a href="https://www.exness.com/fr/demo-account/" target="_blank" class="btn btn-exness">📖 Ouvrir un compte démo gratuit</a>
-        <p class="small-note">Redirection vers Exness — pratiquez sans déposer d'argent</p>
+        <p class="small-note">Pratiquez sans déposer d'argent</p>
     </div>
-
     <div class="card">
-        <h3>🚀 Accès à la plateforme de trading</h3>
-        <p>Une fois formé et prêt à passer au réel, vous pouvez accéder à une plateforme régulée :</p>
+        <h3>🚀 Accès à la plateforme</h3>
+        <p>Une fois prêt, accédez à la plateforme :</p>
         <a href="https://www.exness.com/fr" target="_blank" class="btn btn-exness">🔗 Accéder à Exness</a>
-        <p class="small-note">⚠️ À vous de lire les conditions générales et de trader de manière responsable</p>
+        <p class="small-note">⚠️ À lire les conditions générales</p>
     </div>
 </section>
 
 <section id="investir">
     <h2>💰 Investir — Faire fructifier son argent</h2>
-    
     <div class="succes-box">
         <p>✅ Investir, c'est placer son argent dans des projets solides sur le long terme. Au Niger, passez par une SGI agréée pour être en règle et protégé.</p>
     </div>
-
     <div class="card">
-        <h3>🤝 Comment ça se passe ?</h3>
-        <p>Deux options s'offrent à vous — <strong>vous choisissez ce qui vous convient le mieux :</strong></p>
-        
-        <p style="margin-top:15px;"><strong>Option 1 — Être accompagné par moi :</strong> Je vous explique la démarche, je réponds à vos questions, et je vous oriente vers la bonne structure. Je ne gère pas votre argent — je suis votre conseiller de proximité.</p>
+        <h3>🤝 Deux options pour vous accompagner</h3>
+        <p><strong>Option 1 — Être guidé par moi :</strong> Je vous explique la démarche et vous oriente. Je ne gère pas votre argent — je suis votre conseiller de proximité.</p>
         <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 Me contacter pour être guidé</a>
-        
-        <p style="margin-top:25px;"><strong>Option 2 — Aller directement auprès d'une SGI :</strong> Vous pouvez également contacter directement une SGI agréée pour ouvrir votre compte d'investisseur. Voici quelques structures connues à Niamey :</p>
+        <p style="margin-top:20px;"><strong>Option 2 — Aller directement à la SGI :</strong> Voici quelques SGI agréées à Niamey (à compléter) :</p>
     </div>
-
     <div class="card">
         <h3>🏛️ SGI agréées au Niger</h3>
-        <p class="small-note">📌 Ces informations sont données à titre indicatif. Vérifiez toujours que la SGI est bien agréée par l'Autorité des Marchés Financiers du Niger avant tout engagement.</p>
-        
+        <p class="small-note">📌 Ces informations sont à titre indicatif. Vérifiez toujours auprès de l'Autorité des Marchés Financiers du Niger.</p>
         <div class="sgi-card">
-            <p><strong>SGI — À compléter prochainement</strong><br>
-            📍 Niamey — Adresse à venir<br>
-            📞 Téléphone à venir</p>
+            <p><strong>SGI — À compléter prochainement</strong><br>📍 Niamey — Adresse à venir<br>📞 Téléphone à venir</p>
         </div>
-        
         <div class="sgi-card">
-            <p><strong>SGI — À compléter prochainement</strong><br>
-            📍 Niamey — Adresse à venir<br>
-            📞 Téléphone à venir</p>
+            <p><strong>SGI — À compléter prochainement</strong><br>📍 Niamey — Adresse à venir<br>📞 Téléphone à venir</p>
         </div>
-        
-        <div class="sgi-card">
-            <p><strong>SGI — À compléter prochainement</strong><br>
-            📍 Niamey — Adresse à venir<br>
-            📞 Téléphone à venir</p>
-        </div>
-
-        <p class="small-note" style="margin-top:15px;">ℹ️ <strong>Pour obtenir la liste officielle et à jour des SGI agréées :</strong> rendez-vous auprès de l'Autorité des Marchés Financiers du Niger. Je vous recommande toujours de vérifier l'agrément de la structure avant toute démarche.</p>
+        <p class="small-note" style="margin-top:15px;">ℹ️ Pour la liste officielle, consultez l'Autorité des Marchés Financiers du Niger.</p>
     </div>
-
     <div class="avert-box">
-        <p>⏳ Rappel important : Il n'y a pas de rendement garanti. Chaque projet a ses risques que la SGI vous explique en détail lors de votre rencontre. Méfiez-vous des promesses de gains rapides et trop élevés — ce sont souvent des pièges.</p>
+        <p>⏳ Rappel important : Il n'y a pas de rendement garanti. Chaque projet a ses risques que la SGI vous explique en détail. Méfiez-vous des promesses de gains rapides.</p>
     </div>
 </section>
 
 <section id="prvm">
     <h2>🛡️ PRVM — Protection de la Valeur Monétaire</h2>
-    
     <div class="succes-box">
         <p style="font-size:17px; font-weight:500;">Le concept simple : Votre argent doit conserver son pouvoir d'achat, peu importe ce qui se passe autour de vous.</p>
     </div>
-
     <div class="card">
         <h3>❓ Pourquoi protéger sa valeur ?</h3>
-        <p>L'inflation fait monter les prix année après année. 100 000 FCFA aujourd'hui n'achèteront pas la même chose dans 3 ans. Le PRVM vous aide à anticiper ces changements et à préserver votre pouvoir d'achat.</p>
+        <p>L'inflation fait monter les prix année après année. Le PRVM vous aide à préserver votre pouvoir d'achat.</p>
     </div>
-
     <div class="card">
         <h3>🔑 Les 3 piliers du PRVM</h3>
-        <div class="etape">
-            <div class="etape-num">1</div>
-            <div class="etape-texte">
-                <h4>📊 Suivre les tendances</h4>
-                <p>Consultez l'évolution des devises pour savoir quel est le bon moment pour convertir.</p>
-            </div>
-        </div>
-        <div class="etape">
-            <div class="etape-num">2</div>
-            <div class="etape-texte">
-                <h4>🔄 Convertir au bon moment</h4>
-                <p>Changez progressivement quand c'est avantageux, pas dans la panique ou l'urgence.</p>
-            </div>
-        </div>
-        <div class="etape">
-            <div class="etape-num">3</div>
-            <div class="etape-texte">
-                <h4>🏛️ Diversifier légalement</h4>
-                <p>La SGI vous aide à répartir vos avoirs en toute sécurité et en toute légalité.</p>
-            </div>
-        </div>
+        <p><strong>1. 📊 Suivre les tendances</strong> — Pour savoir quand convertir</p>
+        <p><strong>2. 🔄 Convertir au bon moment</strong> — Pas dans la panique</p>
+        <p><strong>3. 🏛️ Diversifier via la SGI</strong> — En toute légalité</p>
     </div>
-
     <div class="card">
         <h3>📈 Suivre les taux et tendances</h3>
-        <p>Pour savoir quand convertir et préserver la valeur de votre argent, accédez gratuitement aux informations du marché :</p>
         <a href="https://www.investing.com/currencies/" target="_blank" class="btn btn-bleu">📊 Voir les taux et tendances</a>
     </div>
-
     <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 En savoir plus sur le PRVM</a>
 </section>
 
-<section id="services">
-    <h2>🤝 Échanger ou Envoyer de l'argent</h2>
-
-    <div class="card">
-        <h3>💡 Comment ça marche ?</h3>
-        
-        <div class="etape">
-            <div class="etape-num">1</div>
-            <div class="etape-texte">
-                <h4>Contacte-moi sur WhatsApp</h4>
-                <p>Dis-moi le montant, la ville et la devise dont tu as besoin.</p>
-            </div>
-        </div>
-
-        <div class="etape">
-            <div class="etape-num">2</div>
-            <div class="etape-texte">
-                <h4>On valide ensemble</h4>
-                <p>Je te donne le taux du jour — clair, transparent et sans surprise.</p>
-            </div>
-        </div>
-
-        <div class="etape">
-            <div class="etape-num">3</div>
-            <div class="etape-texte">
-                <h4>Rencontre en toute confiance</h4>
-                <p>À Niamey ou dans une ville proche, on se retrouve pour finaliser l'échange.</p>
-            </div>
-        </div>
+<section id="contact">
+    <h2>📞 Me Contacter</h2>
+    <div class="card" style="text-align:center; padding:25px;">
+        <p style="font-size:18px; font-weight:bold; color:#166534; margin-bottom:15px;">📱 WhatsApp : +227 89 21 41 67</p>
+        <p style="color:#4b5563; margin-bottom:20px;">Disponible tous les jours pour vous accompagner</p>
+        <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 Discuter maintenant</a>
     </div>
+</section>
 
-    <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 Me contacter pour un é
+</div>
+
+<script>
+function choisirLangue() {
+    document.getElementById('lang-screen').style.display = 'none';
+    document.getElementById('main-content').classList.add('show');
+}
+
+function afficherSection(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    event.target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function convertir() {
+    const montant = parseFloat(document.getElementById('montant').value);
+    const depart = document.getElementById('devisesDepart').value;
+    const arrivee = document.getElementById('devisesArrivee').value;
+    
+    const taux = {
+        'XOF': { 'XOF': 1, 'USD': 0.00163, 'EUR': 0.00150, 'NGN': 2.55 },
+        'USD': { 'XOF': 610, 'USD': 1, 'EUR': 0.92, 'NGN': 1550 },
+        'EUR': { 'XOF': 668, 'USD': 1.09, 'EUR': 1, 'NGN': 1680 },
+        'NGN': { 'XOF': 0.39, 'USD': 0.000645, 'EUR': 0.000595, 'NGN': 1 }
+    };
+    
+    const resultat = montant * taux[depart][arrivee];
+    const deviseSymbole = { 'XOF': 'FCFA', 'USD': '$', 'EUR': '€', 'NGN': '₦' };
+    
+    document.getElementById('resultat').textContent = resultat.toFixed(2) + ' ' + deviseSymbole[arrivee];
+}
+</script>
+
+</body>
+</html>
