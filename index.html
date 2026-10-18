@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#008C45">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiVENISU5KSSIsInNob3J0X25hbWUiOiJUQ0hJTkpJIiwiZGVzY3JpcHRpb24iOiJUQ0hJTkpJIC0gQ2hhbmdlciAtIEVudm95ZXIgLSBBcHJlbmRyZSBhdmVjIGNvbmZpYW5jZSIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZmZmZmZmIiwidGhlbWVfY29sb3IiOiIjMDA4QzQ1IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NjaXJjbGUgY3g9JzUwJyBjeT0nNTAnIHI9JzQ1JyBmaWxsPSclMjMwMDhDNDUnLyUzRSUzQ3RleHQgeD0nNTAnIHk9JzY1JyBmb250LXNpemU9JzQwJyBmaWxsPSd3aGl0ZScgdGV4dC1hbmNob3I9J21pZGRsZScgZmlsbC1vcGFjaXR5PScxJyUzRSUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
     <title>TCHINJI — Échanger • Envoyer • Apprendre</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
         :root { --vert: #008C45; --vert-fonce: #006B34; --vert-clair: #e6f7ee; --orange: #F59E0B; --bleu: #0284C7; --rouge: #DC2626; --blanc: #fff; --gris: #f3f4f6; --noir: #1f2937; }
-        body { background: var(--gris); color: var(--noir); line-height: 1.6; padding-bottom: 80px; }
+        body { background: var(--gris); color: var(--noir); line-height: 1.6; padding-bottom: 100px; }
         
         /* ===== ÉCRAN DE CHARGEMENT & ANIMATION ===== */
         #splash-screen {
@@ -72,27 +74,11 @@
         .dot:nth-child(2) { animation-delay: 0.2s; }
         .dot:nth-child(3) { animation-delay: 0.4s; }
         
-        @keyframes logoAppear {
-            to { opacity: 1; transform: scale(1); }
-        }
-        
-        @keyframes logoBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        @keyframes textFadeIn {
-            to { opacity: 1; }
-        }
-        
-        @keyframes dotBounce {
-            0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-12px); }
-        }
-        
-        @keyframes splashFadeOut {
-            to { opacity: 0; visibility: hidden; }
-        }
+        @keyframes logoAppear { to { opacity: 1; transform: scale(1); } }
+        @keyframes logoBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        @keyframes textFadeIn { to { opacity: 1; } }
+        @keyframes dotBounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-12px)} }
+        @keyframes splashFadeOut { to { opacity: 0; visibility: hidden; } }
         
         /* ===== ÉCRAN DE CHOIX DE LANGUE ===== */
         #lang-screen {
@@ -113,9 +99,7 @@
             visibility: hidden;
         }
         
-        @keyframes fadeIn {
-            to { opacity: 1; visibility: visible; }
-        }
+        @keyframes fadeIn { to { opacity: 1; visibility: visible; } }
         
         #lang-screen h1 {
             color: white;
@@ -126,9 +110,7 @@
             gap: 10px;
         }
         
-        #lang-screen .mini-logo {
-            font-size: 28px;
-        }
+        #lang-screen .mini-logo { font-size: 28px; }
         
         #lang-screen p {
             color: rgba(255,255,255,0.85);
@@ -157,17 +139,50 @@
             gap: 10px;
         }
         
-        .lang-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        .lang-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+        
+        /* ===== BOUTON INSTALLATION ===== */
+        #install-prompt {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--vert), var(--vert-fonce));
+            color: white;
+            padding: 12px 15px;
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         
-        .lang-btn span {
-            font-size: 22px;
+        #install-prompt span { font-size: 14px; font-weight: 500; }
+        
+        #install-btn-top {
+            background: white;
+            color: var(--vert);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        #close-install {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0 5px;
         }
         
         /* ===== LE RESTE ===== */
-        header { background: linear-gradient(135deg, var(--vert), var(--vert-fonce)); color: white; padding: 20px; text-align: center; }
+        header { background: linear-gradient(135deg, var(--vert), var(--vert-fonce)); color: white; padding: 20px; text-align: center; padding-top: 60px; }
         .lang-switch { position: absolute; top: 15px; right: 15px; }
         .lang-switch button { background: rgba(255,255,255,0.2); border: none; color: white; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 14px; }
         
@@ -185,9 +200,11 @@
         
         .card { background: white; border-radius: 12px; padding: 18px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         
-        .btn { display: block; background: var(--vert); color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; text-align: center; border: none; font-size: 16px; cursor: pointer; margin: 8px 0; width: 100%; }
+        .btn { display: block; background: var(--vert); color: white; padding: 14px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; text-align: center; border: none; font-size: 16px; cursor: pointer; margin: 10px 0; width: 100%; transition: transform 0.2s; }
+        .btn:active { transform: scale(0.98); }
         .btn-orange { background: var(--orange); }
         .btn-bleu { background: var(--bleu); }
+        .btn-install { background: linear-gradient(135deg, #1e40af, #3b82f6); }
         
         .avertissement { background: #fef3c7; border-left: 4px solid var(--orange); padding: 12px; margin: 15px 0; border-radius: 4px; font-size: 14px; }
         .info-box { background: #e0f2fe; border-left: 4px solid #0284c7; padding: 15px; margin: 15px 0; border-radius: 8px; font-size: 15px; }
@@ -206,7 +223,6 @@
         
         .bureau-card { background: white; border: 2px solid var(--vert); border-radius: 10px; padding: 15px; text-align: center; margin: 10px 0; }
         .bureau-card h4 { color: var(--vert); font-size: 17px; margin-bottom: 5px; }
-        .bureau-card p { font-size: 14px; color: #555; }
         
         input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; }
         .resultat { font-size: 22px; font-weight: bold; color: var(--vert); text-align: center; padding: 15px; }
@@ -214,10 +230,15 @@
         .hidden { display: none !important; }
         
         #contact-whatsapp { display: none; margin-top: 20px; padding: 18px; background: #dcfce7; border-radius: 10px; text-align: center; border: 2px solid #25D366; }
-        #contact-whatsapp p:first-child { font-weight: bold; color: #166534; margin-bottom: 12px; font-size: 15px; }
         .whatsapp-btn { display: inline-block; background: #25D366; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 16px; margin: 8px 0; }
-        .whatsapp-btn:hover { background: #1da851; }
-        .numero-affiche { margin-top: 10px; font-size: 15px; color: #333; font-weight: 500; }
+        
+        /* ===== PAGE CODE QR ===== */
+        .qr-container { text-align: center; padding: 20px; }
+        .qr-box { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin: 20px 0; }
+        .qr-code { font-size: 120px; margin: 20px 0; }
+        .qr-instructions { text-align: left; margin-top: 20px; }
+        .qr-instructions h4 { margin-bottom: 10px; color: var(--vert); }
+        .qr-instructions ol { margin-left: 20px; line-height: 1.8; font-size: 15px; }
         
         .chapitre { border-left: 3px solid #ddd; padding-left: 15px; margin: 20px 0; }
         .chapitre.ouvert { border-color: var(--vert); background: #f9fafb; padding: 15px; border-radius: 0 8px 8px 0; }
@@ -233,11 +254,16 @@
         .action-card .prix { font-size: 18px; font-weight: bold; margin: 5px 0; }
         .action-card .var-plus { color: #008C45; font-size: 13px; }
         .action-card .var-moins { color: #DC2626; font-size: 13px; }
-        .portfolio-list { margin-top: 15px; }
-        .portfolio-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px; }
     </style>
 </head>
 <body>
+
+<!-- 📲 BANNIÈRE D'INSTALLATION EN HAUT -->
+<div id="install-prompt">
+    <button id="close-install">×</button>
+    <span data-fr="💡 Installez TCHINJI sur votre écran d'accueil !" data-ha="💡 Saka TCHINJI a allon wayarka!" data-en="💡 Install TCHINJI on your home screen!">💡 Installez TCHINJI sur votre écran d'accueil !</span>
+    <button id="install-btn-top" data-fr="Installer" data-ha="Saka" data-en="Install">Installer</button>
+</div>
 
 <!-- 🎬 ÉCRAN D'ANIMATION D'ENTRÉE -->
 <div id="splash-screen">
@@ -268,7 +294,7 @@
     </button>
 </div>
 
-<!-- 📱 CONTENU PRINCIPAL -- TOUT EST LÀ -->
+<!-- 📱 CONTENU PRINCIPAL -->
 <div id="main-content" class="hidden">
 
 <header>
@@ -282,12 +308,12 @@
 <nav>
     <ul>
         <li><a href="#accueil" class="active" onclick="afficherSection('accueil')" data-fr="Accueil" data-ha="Gida" data-en="Home">Accueil</a></li>
-        <li><a href="#services" onclick="afficherSection('services')" data-fr="🤝 Nos Services" data-ha="🤝 Ayyukanmu" data-en="🤝 Our Services">🤝 Nos Services</a></li>
+        <li><a href="#services" onclick="afficherSection('services')" data-fr="🤝 Services" data-ha="🤝 Ayyuka" data-en="🤝 Services">🤝 Services</a></li>
         <li><a href="#devises" onclick="afficherSection('devises')" data-fr="💱 Devises" data-ha="💱 Kuɗi" data-en="💱 Currencies">💱 Devises</a></li>
-        <li><a href="#lecture" onclick="afficherSection('lecture')" data-fr="📖 Lire & Apprendre" data-ha="📖 Karatu" data-en="📖 Read & Learn">📖 Lire & Apprendre</a></li>
-        <li><a href="#demo" onclick="afficherSection('demo')" data-fr="🎮 Mode Démo" data-ha="🎮 Koyarwa" data-en="🎮 Practice Mode">🎮 Mode Démo</a></li>
-        <li><a href="#apropos" onclick="afficherSection('apropos')" data-fr="ℹ️ À Propos" data-ha="ℹ️ Game Mu" data-en="ℹ️ About Us">ℹ️ À Propos</a></li>
-        <li><a href="#contact" onclick="afficherSection('contact')" data-fr="📞 Contact" data-ha="📞 Tuntuɓe Mu" data-en="📞 Contact">📞 Contact</a></li>
+        <li><a href="#lecture" onclick="afficherSection('lecture')" data-fr="📖 Apprendre" data-ha="📖 Koyo" data-en="📖 Learn">📖 Apprendre</a></li>
+        <li><a href="#demo" onclick="afficherSection('demo')" data-fr="🎮 Démo" data-ha="🎮 Koyarwa" data-en="🎮 Demo">🎮 Démo</a></li>
+        <li><a href="#qrcode" onclick="afficherSection('qrcode')" data-fr="📲 Installer" data-ha="📲 Saka App" data-en="📲 Install App">📲 Installer</a></li>
+        <li><a href="#contact" onclick="afficherSection('contact')" data-fr="📞 Contact" data-ha="📞 Tuntuɓe" data-en="📞 Contact">📞 Contact</a></li>
     </ul>
 </nav>
 
@@ -295,13 +321,12 @@
     <h2 data-fr="Bienvenue sur TCHINJI 👋" data-ha="Barka da zuwa TCHINJI 👋" data-en="Welcome to TCHINJI 👋">Bienvenue sur TCHINJI 👋</h2>
     
     <div class="succes-box">
-        <p data-fr="✅ Que vous soyez en Europe, aux États-Unis, au Canada, en Afrique ou n'importe où dans le monde — vous pouvez envoyer de l'argent au Niger à vos proches, simplement et en toute confiance." data-ha="✅ Ko kana a Turai, Amurka, Kanada, Afirka ko ko'ina a duniya — za ka iya aika kuɗi ga danginka a Nijar, cikin sauƙi da aminci." data-en="✅ Whether you are in Europe, the USA, Canada, Africa or anywhere in the world — you can send money to your loved ones in Niger, simply and with confidence.">✅ Que vous soyez en Europe, aux États-Unis, au Canada, en Afrique ou n'importe où dans le monde — vous pouvez envoyer de l'argent au Niger à vos proches, simplement et en toute confiance.</p>
+        <p data-fr="✅ Que vous soyez partout dans le monde — envoyez de l'argent au Niger simplement et en toute confiance." data-ha="✅ Ko'ina kuke a duniya — aika kuɗi zuwa Nijar cikin sauƙi da aminci." data-en="✅ Wherever you are in the world — send money to Niger simply and confidently.">✅ Que vous soyez partout dans le monde — envoyez de l'argent au Niger simplement et en toute confiance.</p>
     </div>
 
-    <button class="btn" onclick="afficherSection('devises')">💱 Calculer un taux de change</button>
-    <button class="btn btn-bleu" onclick="afficherSection('services')" data-fr="🤝 Comment ça marche ?" data-ha="🤝 Yaya yake aiki ?" data-en="🤝 How does it work?">🤝 Comment ça marche ?</button>
-    <button class="btn btn-orange" onclick="afficherSection('lecture')" data-fr="📖 Apprendre à investir" data-ha="📖 Koyo saka hannun jari" data-en="📖 Learn to invest">📖 Apprendre à investir</button>
-    <button class="btn" style="background: linear-gradient(135deg, #1e40af, #3b82f6);" onclick="afficherSection('demo')" data-fr="🎮 S'entraîner au trading" data-ha="🎮 Koyarwa ciniki" data-en="🎮 Practice trading">🎮 S'entraîner au trading</button>
+    <button class="btn" onclick="afficherSection('devises')">💱 Calculer un taux</button>
+    <button class="btn btn-bleu" onclick="afficherSection('services')" data-fr="🤝 Envoyer de l'argent" data-ha="🤝 Aika kuɗi" data-en="🤝 Send Money">🤝 Envoyer de l'argent</button>
+    <button class="btn btn-install" onclick="afficherSection('qrcode')" data-fr="📲 Installer l'application" data-ha="📲 Saka App" data-en="📲 Install the App">📲 Installer l'application</button>
 </section>
 
 <section id="services">
@@ -313,8 +338,8 @@
         <div class="etape">
             <div class="etape-num">1</div>
             <div class="etape-texte">
-                <h4 data-fr="Vous nous contactez, où que vous soyez" data-ha="Ka tuntuɓe mu, ko ina kake" data-en="You contact us, wherever you are">Vous nous contactez, où que vous soyez</h4>
-                <p data-fr="Peu importe votre pays — écrivez-nous sur WhatsApp ! Indiquez-nous simplement le montant et la personne à qui vous voulez envoyer l'argent au Niger." data-ha="Ko kasarka menene — rubuta mana ta WhatsApp! Ka gaya mana kawai adadin kuɗi da mutumin da kake son aika wa shi kuɗi a Nijar." data-en="No matter your country — write to us on WhatsApp! Simply tell us the amount and the person you want to send money to in Niger.">Peu importe votre pays — écrivez-nous sur WhatsApp ! Indiquez-nous simplement le montant et la personne à qui vous voulez envoyer l'argent au Niger.</p>
+                <h4 data-fr="Écrivez-nous sur WhatsApp" data-ha="Rubuta mana ta WhatsApp" data-en="Write to us on WhatsApp">Écrivez-nous sur WhatsApp</h4>
+                <p data-fr="Partout dans le monde, contactez-nous et indiquez le montant et la personne à qui envoyer l'argent." data-ha="Ko'ina a duniya, tuntuɓe mu ka gaya mana adadin kuɗi da mutumin da za ka aika wa shi." data-en="From anywhere in the world, contact us and tell us the amount and recipient.">Partout dans le monde, écrivez-nous sur WhatsApp et indiquez le montant et la personne à qui envoyer l'argent.</p>
             </div>
         </div>
 
@@ -322,76 +347,25 @@
             <div class="etape-num">2</div>
             <div class="etape-texte">
                 <h4 data-fr="Nous convenons du taux ensemble" data-ha="Mun amince da adadin kuɗi tare" data-en="We agree on the rate together">Nous convenons du taux ensemble</h4>
-                <p data-fr="Nous vous répondons rapidement, vous expliquons tout clairement et nous convenons ensemble du montant exact que votre proche recevra. Pas de frais cachés, pas de surprise." data-ha="Muna amsa muku da sauri, muna bayyana muku komi a fili kuma mun amince tare da ainihin adadin kuɗin da danginka zai karɓa. Babu kuɗin ɓoye, babu abin mamaki." data-en="We reply quickly, explain everything clearly, and we agree together on the exact amount your loved one will receive. No hidden fees, no surprises.">Nous vous répondons rapidement, vous expliquons tout clairement et nous convenons ensemble du montant exact que votre proche recevra. Pas de frais cachés, pas de surprise.</p>
+                <p data-fr="Réponse rapide, explications claires, montant exact convenu. Pas de surprise." data-en="Quick reply, clear explanations, exact amount agreed. No surprises.">Nous répondons rapidement et fixons le montant ensemble.</p>
             </div>
         </div>
 
         <div class="etape">
             <div class="etape-num">3</div>
             <div class="etape-texte">
-                <h4 data-fr="Votre proche reçoit l'argent au Niger" data-ha="Danginka ya karɓi kuɗin a Nijar" data-en="Your loved one receives the money in Niger">Votre proche reçoit l'argent au Niger</h4>
-                <p data-fr="La personne que vous avez désignée vient nous rendre visite en personne dans nos bureaux de Niamey ou de Maradi. Nous lui remettons l'argent directement en main propre." data-ha="Mutumin da kuka zaɓa ya zo ya gan mu a ofishinmu a Niamey ko Maradi. Muna ba shi kuɗin kai tsaye a hannu." data-en="The person you designated comes to visit us in person at our office in Niamey or Maradi. We hand the money directly to them.">La personne que vous avez désignée vient nous rendre visite en personne dans nos bureaux de Niamey ou de Maradi. Nous lui remettons l'argent directement en main propre.</p>
+                <h4 data-fr="Remise en main propre au Niger" data-ha="Bayar da kuɗin kai tsaye a Nijar" data-en="Hand-delivered in Niger">Remise en main propre au Niger</h4>
+                <p data-fr="Votre proche vient récupérer l'argent dans nos bureaux de Niamey ou Maradi." data-ha="Danginka ya zo karɓi kuɗin a ofishinmu a Niamey ko Maradi." data-en="Your loved one comes to collect the money at our office in Niamey or Maradi.">Votre proche vient récupérer l'argent en personne dans nos bureaux.</p>
             </div>
         </div>
 
         <div class="etape">
             <div class="etape-num">4</div>
             <div class="etape-texte">
-                <h4 data-fr="✅ C'est fait !" data-ha="✅ An gama!" data-en="✅ All done!">✅ C'est fait !</h4>
-                <p data-fr="Vous êtes informé, votre proche est content. Simple, sûr, de confiance." data-ha="An sanar da kai, danginka ya faru. Sauƙi, aminci, da amana." data-en="You're kept informed, your loved one is happy. Simple, safe, trustworthy.">Vous êtes informé, votre proche est content. Simple, sûr, de confiance.</p>
+                <h4 data-fr="✅ C'est terminé !" data-ha="✅ An gama!" data-en="✅ All done!">✅ C'est terminé !</h4>
+                <p data-fr="Simple, sûr et de confiance." data-ha="Sauƙi, aminci, da amana." data-en="Simple, safe and trusted.">Simple, sûr et de confiance.</p>
             </div>
         </div>
-    </div>
-
-    <h3 data-fr="🏢 Nos bureaux au Niger" data-ha="🏢 Ofishenmu a Nijar" data-en="🏢 Our offices in Niger">🏢 Nos bureaux au Niger</h3>
-    <div style="display:grid; gap:10px; grid-template-columns:1fr 1fr;">
-        <div class="bureau-card">
-            <h4>📍 Niamey</h4>
-            <p data-fr="Ouvert prochainement" data-ha="Zai buɗe nan ba da jimawa ba" data-en="Opening soon">Ouvert prochainement</p>
-        </div>
-        <div class="bureau-card">
-            <h4>📍 Maradi</h4>
-            <p data-fr="Ouvert prochainement" data-ha="Zai buɗe nan ba da jimawa ba" data-en="Opening soon">Ouvert prochainement</p>
-        </div>
-    </div>
-
-    <h3 style="margin-top:25px;" data-fr="⭐ Pourquoi nous choisir ?" data-ha="⭐ Me ya sa za ku zaɓe mu?" data-en="⭐ Why choose us?">⭐ Pourquoi nous choisir ?</h3>
-    
-    <div class="avantage">
-        <div class="avantage-icone">🌍</div>
-        <div class="avantage-texte">
-            <h4 data-fr="Partout dans le monde" data-ha="Ko'ina a duniya" data-en="From anywhere in the world">Partout dans le monde</h4>
-            <p data-fr="Il suffit de nous écrire. Pas besoin d'être dans un pays spécifique." data-ha="Kawai ku rubuta mana. Babu buƙatar zama a wata ƙasa musamman." data-en="Just write to us. No need to be in any specific country.">Il suffit de nous écrire. Pas besoin d'être dans un pays spécifique.</p>
-        </div>
-    </div>
-
-    <div class="avantage">
-        <div class="avantage-icone">💰</div>
-        <div class="avantage-texte">
-            <h4 data-fr="Des tarifs justes" data-ha="Farashi na gaskiya" data-en="Fair fees">Des tarifs justes</h4>
-            <p data-fr="Bien moins cher que les grandes sociétés de transfert." data-ha="Ya fi na manyan kamfanonin aika kuɗi rahusa." data-en="Much cheaper than big transfer companies.">Bien moins cher que les grandes sociétés de transfert.</p>
-        </div>
-    </div>
-
-    <div class="avantage">
-        <div class="avantage-icone">🤝</div>
-        <div class="avantage-texte">
-            <h4 data-fr="Une relation de confiance" data-ha="Dangantaka ta amana" data-en="A real relationship">Une relation de confiance</h4>
-            <p data-fr="On discute, on se parle. Pas de machine, pas de procédure compliquée." data-ha="Muna tattaunawa, muna magana da juna. Babu na'ura, babu tsari mai wahala." data-en="We talk, we help each other. No machines, no complicated procedures.">On discute, on se parle. Pas de machine, pas de procédure compliquée.</p>
-        </div>
-    </div>
-
-    <div class="avantage">
-        <div class="avantage-icone">🛡️</div>
-        <div class="avantage-texte">
-            <h4 data-fr="Remise en main propre" data-ha="Ana ba da a hannu" data-en="Hand-delivered security">Remise en main propre</h4>
-            <p data-fr="L'argent est remis directement à la personne de votre choix dans nos bureaux." data-ha="Ana ba da kuɗin kai tsaye ga mutumin da kuka zaɓa a ofishinmu." data-en="Money is handed directly to the person you choose at our offices.">L'argent est remis directement à la personne de votre choix dans nos bureaux.</p>
-        </div>
-    </div>
-
-    <div class="info-box" style="margin-top:25px;">
-        <p data-fr="💬 Prêt à envoyer de l'argent ? Écrivez-nous sur WhatsApp !" data-ha="💬 A shirye ku aika kuɗi? Rubuta mana ta WhatsApp!" data-en="💬 Ready to send money? Write to us on WhatsApp!">💬 Prêt à envoyer de l'argent ? Écrivez-nous sur WhatsApp !</p>
-        <a href="https://wa.me/22789214167" target="_blank" class="whatsapp-btn" style="width:100%; margin-top:12px;">💬 WhatsApp : +227 89 21 41 67</a>
     </div>
 </section>
 
@@ -418,122 +392,73 @@
         </select>
         <button class="btn" onclick="convertir()">Calculer</button>
         <div class="resultat" id="resultat">—</div>
-        
-        <div id="contact-whatsapp">
-            <p data-fr="✅ Taux calculé ! Besoin d'envoyer de l'argent au Niger ?" data-ha="✅ An ƙididdige adadin! Kana buƙatar aika kuɗi zuwa Nijar?" data-en="✅ Rate calculated! Need to send money to Niger?">✅ Taux calculé ! Besoin d'envoyer de l'argent au Niger ?</p>
-            <p style="font-size:14px; color:#555; margin-bottom:10px;" data-fr="Écrivez-nous sur WhatsApp, où que vous soyez dans le monde !" data-ha="Rubuta mana ta WhatsApp, ko ina kake a duniya!" data-en="Write to us on WhatsApp, wherever you are in the world!">Écrivez-nous sur WhatsApp, où que vous soyez dans le monde !</p>
-            <a href="https://wa.me/22789214167" target="_blank" class="whatsapp-btn">💬 Discuter sur WhatsApp</a>
-            <div class="numero-affiche">📞 +227 89 21 41 67</div>
-        </div>
     </div>
 </section>
 
 <section id="lecture">
-    <h2 data-fr="📖 Lire et Apprendre — Investir en confiance" data-ha="📖 Karatu da Koyo — Saka hannun jari da aminci" data-en="📖 Read and Learn — Investing with confidence">📖 Lire et Apprendre — Investir en confiance</h2>
-    <p style="margin-bottom:20px;" data-fr="Clique sur un chapitre pour l'ouvrir. Lis à ton rythme, apprends pas à pas." data-ha="Danna kan babi don buɗewa. Ka karanta a hankali, ka kowa sannu a sannu." data-en="Click a chapter to open. Read at your own pace, learn step by step.">Clique sur un chapitre pour l'ouvrir. Lis à ton rythme, apprends pas à pas.</p>
+    <h2 data-fr="📖 Lire et Apprendre" data-ha="📖 Karatu da Koyo" data-en="📖 Read and Learn">📖 Lire et Apprendre</h2>
+    <p style="margin-bottom:20px;" data-fr="Clique sur un chapitre pour l'ouvrir." data-ha="Danna kan babi don buɗewa." data-en="Click a chapter to open.">Clique sur un chapitre pour l'ouvrir.</p>
 
     <div class="card chapitre" id="ch1">
         <h4 onclick="basculerChapitre('ch1-contenu')">📕 Chapitre 1 : Qu'est-ce qu'investir ? 👇</h4>
         <div id="ch1-contenu" class="contenu-lecture">
-            <p><strong data-fr="Investir, c'est quoi ?" data-ha="Saka hannun jari — menene hakan ?" data-en="What is investing?">Investir, c'est quoi ?</strong><br><br>
-            <span data-fr="Investir, c'est placer son argent dans un projet ou une entreprise, dans le but de le faire fructifier avec le temps. Ce n'est pas un jeu, ce n'est pas du hasard." data-ha="Saka hannun jari — sanya kuɗi a cikin aiki ko kamfani domin ya ƙaru. Ba wasa ba ne." data-en="Investing means putting money into a project or business to grow wealth over time. It's not a game.">Investir, c'est placer son argent dans un projet ou une entreprise, dans le but de le faire fructifier avec le temps. Ce n'est pas un jeu, ce n'est pas du hasard.</span><br><br>
-            <strong>💰 Pourquoi investir ?</strong><br>
-            • Protéger son argent contre l'inflation<br>
-            • Préparer l'avenir<br>
-            • Aider des entreprises africaines à grandir<br><br>
-            <strong data-fr="⚠️ La règle d'or :" data-ha="⚠️ Dokar zinariya :" data-en="⚠️ Golden rule:">⚠️ La règle d'or :</strong><br>
-            <em data-fr="N'investissez JAMAIS l'argent dont vous avez besoin pour vivre." data-ha="Kada ka taɓa saka kuɗin rayuwa." data-en="NEVER invest money you need to live.">N'investissez JAMAIS l'argent dont vous avez besoin pour vivre.</em></p>
-        </div>
-    </div>
-
-    <div class="card chapitre" id="ch2">
-        <h4 onclick="basculerChapitre('ch2-contenu')">📘 Chapitre 2 : Comprendre la Bourse 👇</h4>
-        <div id="ch2-contenu" class="contenu-lecture">
-            <p><strong data-fr="🏛️ Qu'est-ce que la Bourse ?" data-ha="🏛️ Menene Kasuwar Hannun Jari ?" data-en="🏛️ What is the Stock Market?">🏛️ Qu'est-ce que la Bourse ?</strong><br><br>
-            <span data-fr="C'est un marché où des entreprises vendent de petites parts d'elles-mêmes. Ces parts s'appellent des actions. En acheter = devenir copropriétaire de l'entreprise." data-ha="Kasuwa inda kamfanoni ke sayar da ɓangarensu. Ana kiransa hannun jari. Siyan = zama mai rabo a kamfani." data-en="A marketplace where companies sell small pieces of themselves. Buying a share = becoming part-owner.">C'est un marché où des entreprises vendent de petites parts d'elles-mêmes. Ces parts s'appellent des actions. En acheter = devenir copropriétaire de l'entreprise.</span></p>
-        </div>
-    </div>
-
-    <div class="card chapitre" id="ch3">
-        <h4 onclick="basculerChapitre('ch3-contenu')">📙 Chapitre 3 : La BRVM — Notre Bourse régionale 👇</h4>
-        <div id="ch3-contenu" class="contenu-lecture">
-            <p><strong data-fr="🌍 Qu'est-ce que la BRVM ?" data-ha="🌍 Menene BRVM ?" data-en="🌍 What is BRVM?">🌍 Qu'est-ce que la BRVM ?</strong><br><br>
-            <span data-fr="La BRVM dessert 8 pays de l'UEMOA. Pour investir, il faut passer par une SGI agréée." data-ha="BRVM tana aiki a kasashe 8. Domin saka hannun jari, dole ne ka bi ta SGI." data-en="BRVM serves 8 countries. To invest, you must go through an authorized SGI.">La BRVM dessert 8 pays de l'UEMOA. Pour investir, il faut passer par une SGI agréée.</span></p>
+            <p><strong>Investir, c'est placer son argent dans un projet pour le faire fructifier. Ce n'est pas un jeu. N'investissez jamais l'argent dont vous avez besoin pour vivre.</strong></p>
         </div>
     </div>
 </section>
 
 <section id="demo">
-    <h2 data-fr="🎮 Mode Démo — S'entraîner au trading sans risque" data-ha="🎮 Koyarwa Ciniki — Babu haɗari" data-en="🎮 Practice Mode — Risk-free trading practice">🎮 Mode Démo — S'entraîner au trading sans risque</h2>
-    
+    <h2 data-fr="🎮 Mode Démo Trading" data-ha="🎮 Koyarwa Ciniki" data-en="🎮 Trading Practice">🎮 Mode Démo Trading</h2>
     <div class="demo-compte">
-        <p data-fr="Solde virtuel de départ" data-ha="Tushen kuɗin kwaikwayo" data-en="Starting virtual balance">Solde virtuel de départ</p>
-        <div class="demo-solde" id="solde-demo">1 000 000 FCFA</div>
-        <p style="font-size:13px; opacity:0.8;">⚠️ Ceci n'est PAS de l'argent réel — pour apprendre seulement</p>
+        <p data-fr="Solde virtuel" data-ha="Kudin kwaikwayo" data-en="Virtual balance">Solde virtuel</p>
+        <div class="demo-solde">1 000 000 FCFA</div>
+        <p style="font-size:13px; opacity:0.8;">⚠️ Argent fictif — pour apprendre seulement</p>
     </div>
-
-    <h3 data-fr="📊 Actions disponibles à l'achat" data-ha="📊 Hannun jari da ake iya saya" data-en="📊 Available shares to buy">📊 Actions disponibles à l'achat</h3>
-    
-    <div class="demo-actions" id="liste-actions">
-        <div class="action-card">
-            <div class="nom">SONATEL</div>
-            <div class="prix">23 500 F</div>
-            <div class="var-plus">+0,8%</div>
-        </div>
-        <div class="action-card">
-            <div class="nom">BOA CI</div>
-            <div class="prix">6 150 F</div>
-            <div class="var-plus">+0,5%</div>
-        </div>
-        <div class="action-card">
-            <div class="nom">ORABANK</div>
-            <div class="prix">2 890 F</div>
-            <div class="var-moins">-0,3%</div>
-        </div>
-        <div class="action-card">
-            <div class="nom">SOGB CI</div>
-            <div class="prix">10 800 F</div>
-            <div class="var-plus">+0,4%</div>
-        </div>
-    </div>
-
-    <h3 style="margin-top:25px;" data-fr="💼 Ton portefeuille virtuel" data-ha="💼 Babban asusun ka" data-en="💼 Your virtual portfolio">💼 Ton portefeuille virtuel</h3>
-    <div class="card">
-        <div class="portfolio-list" id="portefeuille">
-            <p style="color:#888; text-align:center; padding:15px;" data-fr="Ton portefeuille est vide. Entraîne-toi à acheter et vendre !" data-ha="Babba asusun ka babu komai. Yi aikin saya da sayarwa!" data-en="Your portfolio is empty. Practice buying and selling!">Ton portefeuille est vide. Entraîne-toi à acheter et vendre !</p>
-        </div>
-    </div>
-
-    <button class="btn btn-orange" onclick="reinitialiserDemo()" style="margin-top:15px;">🔄 Recommencer la démo</button>
 </section>
 
-<section id="apropos">
-    <h2 data-fr="ℹ️ À Propos de TCHINJI" data-ha="ℹ️ Game Mu game TCHINJI" data-en="ℹ️ About TCHINJI">ℹ️ À Propos de TCHINJI</h2>
+<!-- 📲 PAGE CODE QR & INSTALLATION -->
+<section id="qrcode">
+    <h2 data-fr="📲 Installer TCHINJI sur votre téléphone" data-ha="📲 Saka TCHINJI a wayarka" data-en="📲 Install TCHINJI on your phone">📲 Installer TCHINJI sur votre téléphone</h2>
+    
+    <div class="qr-container">
+        <div class="qr-box">
+            <h3 data-fr="📱 Scannez ce code QR" data-ha="📱 Skani wannan lambar QR" data-en="📱 Scan this QR Code">📱 Scannez ce code QR</h3>
+            <div class="qr-code">📱</div>
+            <p style="font-size:14px; color:#666; margin-bottom:15px;" data-fr="Ou visitez le lien ci-dessous :" data-ha="Ko ziyarci hanyar da ke ƙasa :" data-en="Or visit the link below:">Ou visitez le lien ci-dessous :</p>
+            <div style="background:#f3f4f6; padding:12px; border-radius:6px; font-size:13px; word-break:break-all; font-family:monospace;">
+                https://amlconsultsolution-lgtm.github.io/TCHINJI-/
+            </div>
+        </div>
 
-    <div class="card">
-        <h3 data-fr="🌍 Notre mission" data-ha="🌍 Manufarmu" data-en="🌍 Our mission">🌍 Notre mission</h3>
-        <p data-fr="TCHINJI est une initiative nigérienne créée pour rapprocher la diaspora de leurs familles restées au pays. D'abord au Niger, avec l'ambition d'étendre nos services dans d'autres pays de la sous-région avec le temps." data-ha="TCHINJI shiri ne na Nijar wanda aka kirkira domin kusantar da ƴan uwa a ƙetare da danginsu a gida. Da farko a Nijar, sannan da burin faɗaɗa ayyukanmu zuwa wasu ƙasashe a yankin nan nan gaba." data-en="TCHINJI is a Nigerien initiative created to connect the diaspora with their families back home. Starting in Niger, with the ambition to expand to other countries in the sub-region over time.">TCHINJI est une initiative nigérienne créée pour rapprocher la diaspora de leurs familles restées au pays. D'abord au Niger, avec l'ambition d'étendre nos services dans d'autres pays de la sous-région avec le temps.</p>
-    </div>
+        <div class="card qr-instructions">
+            <h4 data-fr="📖 Comment installer sur Android :" data-ha="📖 Yaya ake saka a Android :" data-en="📖 How to install on Android:">📖 Comment installer sur Android :</h4>
+            <ol>
+                <li data-fr="Ouvre TCHINJI dans ton navigateur Chrome" data-ha="Buɗi TCHINJI a cikin mai bincikenka" data-en="Open TCHINJI in your Chrome browser">Ouvre TCHINJI dans ton navigateur Chrome</li>
+                <li data-fr="Appuie sur les 3 points ⋮ en haut à droite" data-ha="Danna kan ɗigogi uku ⋮ a sama dama" data-en="Tap the 3 dots ⋮ at the top right">Appuie sur les 3 points ⋮ en haut à droite</li>
+                <li data-fr="Choisis : &quot;Ajouter à l'écran d'accueil&quot;" data-ha="Zaɓi: &quot;Ƙara zuwa allon gida&quot;" data-en="Choose: &quot;Add to Home screen&quot;">Choisis : "Ajouter à l'écran d'accueil"</li>
+                <li data-fr="Confirme — c'est fait ! L'icône apparaît sur ton téléphone ✅" data-ha="Tabbatar — an gama! Alamar za ta bayyana a wayarka ✅" data-en="Confirm — done! The icon appears on your phone ✅">Confirme — c'est fait ! L'icône apparaît sur ton téléphone ✅</li>
+            </ol>
+        </div>
 
-    <div class="avertissement">
-        ⚠️ <strong data-fr="Information importante :" data-ha="⚠️ Muhimmin Bayani :" data-en="⚠️ Important Notice:">Information importante :</strong>
-        <span data-fr="TCHINJI n'est pas une banque ou un établissement financier agréé. Nous facilitons la mise en relation et la remise d'argent en confiance. Pour les sommes importantes, privilégiez les voies bancaires officielles. Rencontrez-vous toujours dans un lieu sûr pour toute remise d'argent physique." data-ha="TCHINJI ba banki ba ne ko kamfanin kuɗi da aka amince da shi. Muna sauƙaƙe haɗuwa da juna da bayar da kuɗin cikin aminci. Domin makudan kuɗi, fi amfani da hanyoyin banki na hukuma. Koyaushe ku sadu a wuri mai aminci don duk wani bayar da kuɗi na zahiri." data-en="TCHINJI is not a bank or licensed financial institution. We facilitate trusted connections and money delivery. For large amounts, prefer official banking channels. Always meet in a safe public place for any physical money exchange."> TCHINJI n'est pas une banque ou un établissement financier agréé. Nous facilitons la mise en relation et la remise d'argent en confiance. Pour les sommes importantes, privilégiez les voies bancaires officielles. Rencontrez-vous toujours dans un lieu sûr pour toute remise d'argent physique.</span>
+        <div class="card qr-instructions">
+            <h4 data-fr="📖 Comment installer sur iPhone :" data-ha="📖 Yaya ake saka a iPhone :" data-en="📖 How to install on iPhone:">📖 Comment installer sur iPhone :</h4>
+            <ol>
+                <li data-fr="Ouvre TCHINJI dans Safari" data-ha="Buɗi TCHINJI a cikin Safari" data-en="Open TCHINJI in Safari">Ouvre TCHINJI dans Safari</li>
+                <li data-fr="Appuie sur le bouton Partager ↗️ en bas" data-ha="Danna maɓallin Raba ↗️ a ƙasa" data-en="Tap the Share button ↗️ at the bottom">Appuie sur le bouton Partager ↗️ en bas</li>
+                <li data-fr="Choisis : &quot;Sur l'écran d'accueil&quot;" data-ha="Zaɓi: &quot;A allon gida&quot;" data-en="Choose: &quot;Add to Home Screen&quot;">Choisis : "Sur l'écran d'accueil"</li>
+                <li data-fr="Appuie sur Ajouter en haut à droite ✅" data-ha="Danna Ƙara a sama dama ✅" data-en="Tap Add at the top right ✅">Appuie sur Ajouter en haut à droite ✅</li>
+            </ol>
+        </div>
+
+        <button class="btn btn-install" id="manual-install-btn" style="margin-top:25px;">📲 Installer maintenant</button>
     </div>
 </section>
 
 <section id="contact">
     <h2 data-fr="📞 Nous Contacter" data-ha="📞 Tuntuɓe Mu" data-en="📞 Contact Us">📞 Nous Contacter</h2>
-    
     <div class="card" style="text-align:center; padding:25px;">
-        <h3 data-fr="💬 Écrivez-nous directement sur WhatsApp" data-ha="💬 Rubuta mana kai tsaye ta WhatsApp" data-en="💬 Write to us directly on WhatsApp">💬 Écrivez-nous directement sur WhatsApp</h3>
-        <p style="margin:15px 0; font-size:15px;" data-fr="Où que vous soyez dans le monde, nous sommes là pour vous servir." data-ha="Ko ina kake a duniya, muna nan domin yi muku hidima." data-en="Wherever you are in the world, we are here to serve you.">Où que vous soyez dans le monde, nous sommes là pour vous servir.</p>
-        
-        <div style="background:#f0fdf4; padding:20px; border-radius:10px; border:2px solid #25D366; margin:20px 0;">
-            <p style="font-size:18px; font-weight:bold; color:#166534; margin-bottom:10px;">📞 WhatsApp : +227 89 21 41 67</p>
-            <a href="https://wa.me/22789214167" target="_blank" class="whatsapp-btn">💬 Cliquez pour discuter maintenant</a>
-        </div>
-        
-        <p style="font-size:14px; color:#666; margin-top:15px;" data-fr="Nous vous répondrons dans les meilleurs délais. Merci de nous faire confiance !" data-ha="Za mu amsa muku cikin gajeren lokaci. Na gode da amincewar ku!" data-en="We will reply as soon as possible. Thank you for trusting us!">Nous vous répondrons dans les meilleurs délais. Merci de nous faire confiance !</p>
+        <p style="font-size:18px; font-weight:bold; color:#166534; margin-bottom:10px;">📞 WhatsApp : +227 89 21 41 67</p>
+        <a href="https://wa.me/22789214167" target="_blank" class="whatsapp-btn">💬 Discuter maintenant</a>
     </div>
 </section>
 
@@ -541,13 +466,50 @@
 
 <script>
 let langueActuelle = 'fr';
+let deferredPrompt;
 
+// ===== GESTION DE L'INSTALLATION DE L'APPLICATION =====
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    setTimeout(() => {
+        document.getElementById('install-prompt').style.display = 'flex';
+    }, 3000);
+});
+
+document.getElementById('close-install').addEventListener('click', () => {
+    document.getElementById('install-prompt').style.display = 'none';
+});
+
+const doInstall = async () => {
+    if (!deferredPrompt) {
+        alert(langueActuelle === 'fr' 
+            ? "👉 Ouvre le menu du navigateur (les 3 points ⋮) et choisis : 'Ajouter à l'écran d'accueil'"
+            : langueActuelle === 'ha'
+            ? "👉 Buɗi menu na mai bincikenka (ɗigogi uku ⋮) kuma zaɓi: 'Ƙara zuwa allon gida'"
+            : "👉 Open your browser menu (3 dots ⋮) and choose: 'Add to Home screen'");
+        return;
+    }
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+        document.getElementById('install-prompt').style.display = 'none';
+    }
+    deferredPrompt = null;
+};
+
+document.getElementById('install-btn-top').addEventListener('click', doInstall);
+
+// ===== LANGUE ET NAVIGATION =====
 function choisirLangue(lang) {
     langueActuelle = lang;
     localStorage.setItem('tchinji_lang', lang);
     document.getElementById('lang-screen').style.display = 'none';
     document.getElementById('main-content').classList.remove('hidden');
     appliquerLangue(lang);
+    setTimeout(() => {
+        document.getElementById('install-prompt').style.display = 'flex';
+    }, 2000);
 }
 
 function appliquerLangue(lang) {
@@ -566,6 +528,7 @@ function afficherSection(id) {
     document.getElementById(id).classList.add('active');
     document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
     event.target.classList.add('active');
+    window.scrollTo(0, 0);
 }
 
 function basculerChapitre(id) {
@@ -582,14 +545,19 @@ function convertir() {
         'XOF-EUR': 0.00150, 'EUR-XOF': 668,
         'XOF-NGN': 1.55, 'NGN-XOF': 0.645,
         'XOF-GBP': 0.00127, 'GBP-XOF': 787,
-        'USD-EUR': 0.92, 'EUR-USD': 1.09,
-        'USD-NGN': 1565, 'NGN-USD': 0.00064,
-        'EUR-NGN': 1700, 'NGN-EUR': 0.00059,
-        'GBP-USD': 1.28, 'USD-GBP': 0.78,
-        'GBP-EUR': 1.20, 'EUR-GBP': 0.83
     };
     
     const cle = depart + '-' + arrivee;
     const resultat = montant * (taux[cle] || 1);
     
-    document.getElementById('result
+    document.getElementById('resultat').textContent = resultat.toFixed(2) + ' ' + arrivee;
+}
+
+document.getElementById('manual-install-btn').addEventListener('click', doInstall);
+
+const sauvegardee = localStorage.getItem('tchinji_lang');
+if (sauvegardee) choisirLangue(sauvegardee);
+</script>
+
+</body>
+</html>
