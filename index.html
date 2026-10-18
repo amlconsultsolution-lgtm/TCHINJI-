@@ -56,6 +56,29 @@
         
         .lang-btn:active { transform: scale(0.98); }
         
+        /* ===== BOUTON CHANGER DE LANGUE ===== */
+        .lang-switcher {
+            background: white;
+            padding: 10px 15px;
+            text-align: right;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .lang-switcher button {
+            background: transparent;
+            border: 1px solid var(--vert);
+            color: var(--vert);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .lang-switcher button:active {
+            background: var(--vert);
+            color: white;
+        }
+        
         /* ===== CONTENU PRINCIPAL ===== */
         #main-content { display: none; }
         #main-content.visible { display: block; }
@@ -98,21 +121,74 @@
         .about-list strong { color: var(--vert); }
         
         .whatsapp-btn { display: block; background: #25D366; color: white; padding: 14px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; text-align: center; font-size: 16px; margin-top: 10px; }
+        
+        /* ===== MODALE CHANGEMENT DE LANGUE ===== */
+        #change-lang-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9998;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #change-lang-modal.show { display: flex; }
+        
+        .modal-content {
+            background: white;
+            padding: 30px 25px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 320px;
+            text-align: center;
+        }
+        
+        .modal-content h3 { margin-bottom: 20px; color: var(--vert); font-size: 20px; }
+        
+        .close-btn {
+            margin-top: 15px;
+            background: #eee;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
-<!-- 🗣️ ÉCRAN DE CHOIX DE LANGUE — S'AFFICHE TOUJOURS -->
+<!-- 🗣️ ÉCRAN DE CHOIX DE LANGUE AU DÉMARRAGE -->
 <div id="lang-screen">
     <h1>🌍 TCHINJI</h1>
-    <p data-fr="Choisis ta langue / Zaɓi harshenka / Choose your language" data-ha="Zaɓi harshenka ku" data-en="Choose your language">Choisis ta langue</p>
+    <p data-fr="Choisis ta langue" data-ha="Zaɓi harshenka" data-en="Choose your language">Choisis ta langue</p>
     <button class="lang-btn" onclick="choisirLangue('fr')">🇫🇷 Français</button>
     <button class="lang-btn" onclick="choisirLangue('ha')">🇳🇭 Haoussa</button>
     <button class="lang-btn" onclick="choisirLangue('en')">🇬🇧 English</button>
 </div>
 
+<!-- 🌍 MODALE POUR CHANGER DE LANGUE PLUS TARD -->
+<div id="change-lang-modal">
+    <div class="modal-content">
+        <h3 data-fr="Choisis ta langue" data-ha="Zaɓi harshenka" data-en="Choose your language">Choisis ta langue</h3>
+        <button class="lang-btn" onclick="choisirLangue('fr'); fermerModalLangue()">🇫🇷 Français</button>
+        <button class="lang-btn" onclick="choisirLangue('ha'); fermerModalLangue()">🇳🇭 Haoussa</button>
+        <button class="lang-btn" onclick="choisirLangue('en'); fermerModalLangue()">🇬🇧 English</button>
+        <button class="close-btn" onclick="fermerModalLangue()">✕ Fermer</button>
+    </div>
+</div>
+
 <!-- 📱 CONTENU PRINCIPAL -->
 <div id="main-content">
+
+<!-- 🌍 BOUTON CHANGER DE LANGUE EN HAUT -->
+<div class="lang-switcher">
+    <button onclick="ouvrirModalLangue()">🌍 <span data-fr="Changer de langue" data-ha="Canza harshe" data-en="Change language">Changer de langue</span></button>
+</div>
 
 <header>
     <h1>🌍 TCHINJI</h1>
@@ -136,12 +212,11 @@
         <p data-fr="✅ Que vous soyez au Niger ou à l'étranger — envoyez de l'argent simplement et en toute confiance." data-ha="✅ Ko kuke Nijar ko ƙasashen waje — aika kuɗi cikin sauƙi da aminci." data-en="✅ Whether in Niger or abroad — send money simply and confidently.">✅ Que vous soyez au Niger ou à l'étranger — envoyez de l'argent simplement et en toute confiance.</p>
     </div>
 
-    <button class="btn" onclick="afficherSection('apropos')">ℹ️ En savoir plus</button>
-    <button class="btn btn-bleu" onclick="afficherSection('devises')">💱 Calculer un taux</button>
+    <button class="btn" onclick="afficherSection('apropos')">ℹ️ <span data-fr="En savoir plus" data-ha="Sanin ƙarin bayani" data-en="Learn more">En savoir plus</span></button>
+    <button class="btn btn-bleu" onclick="afficherSection('devises')">💱 <span data-fr="Calculer un taux" data-ha="Lissafi adadin kuɗi" data-en="Calculate rate">Calculer un taux</span></button>
     <button class="btn btn-orange" onclick="afficherSection('services')" data-fr="🤝 Envoyer de l'argent" data-ha="🤝 Aika kuɗi" data-en="🤝 Send Money">🤝 Envoyer de l'argent</button>
 </section>
 
-<!-- ℹ️ NOUVELLE SECTION : À PROPOS -->
 <section id="apropos">
     <h2 data-fr="ℹ️ À Propos de TCHINJI" data-ha="ℹ️ Game TCHINJI" data-en="ℹ️ About TCHINJI">ℹ️ À Propos de TCHINJI</h2>
     
@@ -233,7 +308,7 @@
     <h2 data-fr="📞 Nous Contacter" data-ha="📞 Tuntuɓe Mu" data-en="📞 Contact Us">📞 Nous Contacter</h2>
     <div class="card" style="text-align:center; padding:25px;">
         <p style="font-size:18px; font-weight:bold; color:#166534; margin-bottom:15px;">📞 WhatsApp : +227 89 21 41 67</p>
-        <a href="https://wa.me/22789214167" target="_blank" class="whatsapp-btn">💬 Discuter maintenant</a>
+        <a href="https://wa.me/22789214167" target="_blank" class="whatsapp-btn">💬 <span data-fr="Discuter maintenant" data-ha="Tattauna yanzu" data-en="Chat now">Discuter maintenant</span></a>
     </div>
 </section>
 
@@ -242,7 +317,7 @@
 <script>
 let langueActuelle = 'fr';
 
-// ===== CHOIX DE LANGUE — TOUJOURS AFFICHÉ =====
+// ===== CHOIX DE LANGUE AU DÉMARRAGE =====
 function choisirLangue(lang) {
     langueActuelle = lang;
     document.getElementById('lang-screen').style.display = 'none';
@@ -254,6 +329,15 @@ function appliquerLangue(lang) {
     document.querySelectorAll('[data-fr]').forEach(el => {
         el.textContent = el.getAttribute(`data-${lang}`);
     });
+}
+
+// ===== FONCTIONS POUR CHANGER DE LANGUE EN COURS DE NAVIGATION =====
+function ouvrirModalLangue() {
+    document.getElementById('change-lang-modal').classList.add('show');
+}
+
+function fermerModalLangue() {
+    document.getElementById('change-lang-modal').classList.remove('show');
 }
 
 function afficherSection(id) {
@@ -283,4 +367,5 @@ function convertir() {
 </script>
 
 </body>
-</html>
+    </html>
+    
