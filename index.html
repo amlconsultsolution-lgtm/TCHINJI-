@@ -10,7 +10,6 @@
         :root { --vert: #008C45; --vert-fonce: #006B34; --orange: #F59E0B; --bleu: #0284C7; --violet: #7C3AED; --rouge: #DC2626; --blanc: #fff; --gris: #f3f4f6; --gris-fonce: #4b5563; --noir: #1f2937; }
         body { background: var(--gris); color: var(--noir); line-height: 1.6; padding-bottom: 90px; }
         
-        /* ===== ÉCRAN DE CHOIX DE LANGUE ===== */
         #lang-screen {
             position: fixed;
             top: 0;
@@ -30,12 +29,10 @@
         .lang-btn { background: white; border: none; border-radius: 14px; padding: 18px 30px; width: 100%; max-width: 300px; font-size: 18px; font-weight: bold; color: var(--vert); cursor: pointer; margin: 10px 0; transition: all 0.3s ease; }
         .lang-btn:active { transform: scale(0.98); }
         
-        /* ===== BOUTON CHANGER DE LANGUE ===== */
         .lang-switcher { background: white; padding: 10px 15px; text-align: right; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .lang-switcher button { background: transparent; border: 1px solid var(--vert); color: var(--vert); padding: 6px 12px; border-radius: 20px; font-size: 14px; cursor: pointer; }
         .lang-switcher button:active { background: var(--vert); color: white; }
         
-        /* ===== MODALE CHANGEMENT DE LANGUE ===== */
         #change-lang-modal {
             display: none;
             position: fixed;
@@ -53,7 +50,6 @@
         .modal-content h3 { margin-bottom: 20px; color: var(--vert); font-size: 20px; }
         .close-btn { margin-top: 15px; background: #eee; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; }
         
-        /* ===== CONTENU PRINCIPAL ===== */
         #main-content { display: none; }
         #main-content.visible { display: block; }
         
@@ -82,9 +78,10 @@
         .btn-orange { background: var(--orange); }
         .btn-bleu { background: var(--bleu); }
         .btn-violet { background: var(--violet); }
-        .btn-rouge { background: var(--rouge); }
+        .btn-exness { background: #FF6600; }
+        .btn-whatsapp { background: #25D366; }
         
-        .info-box { background: #e0f2fe; border-left: 4px solid #0284c7; padding: 15px; margin: 15px 0; border-radius: 8px; font-size: 15px; }
+        .info-box { background: #e0f2fe; border-left: 4px solid #0284C7; padding: 15px; margin: 15px 0; border-radius: 8px; font-size: 15px; }
         .succes-box { background: #f0fdf4; border-left: 4px solid var(--vert); padding: 15px; margin: 15px 0; border-radius: 8px; font-size: 15px; }
         .avert-box { background: #fffbeb; border-left: 4px solid var(--orange); padding: 15px; margin: 15px 0; border-radius: 8px; font-size: 15px; }
         .danger-box { background: #fef2f2; border-left: 4px solid var(--rouge); padding: 15px; margin: 15px 0; border-radius: 8px; font-size: 15px; }
@@ -94,14 +91,11 @@
         .etape-texte h4 { font-size: 15px; margin-bottom: 3px; }
         .etape-texte p { font-size: 14px; color: var(--gris-fonce); }
         
-        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; }
-        textarea { min-height: 100px; resize: vertical; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; }
         .resultat { font-size: 22px; font-weight: bold; color: var(--vert); text-align: center; padding: 15px; }
         
         .about-list p { margin: 10px 0; font-size: 15px; line-height: 1.7; }
         .about-list strong { color: var(--vert); }
-        
-        .whatsapp-btn { display: block; background: #25D366; color: white; padding: 14px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; text-align: center; font-size: 16px; margin-top: 10px; }
         
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 0; }
         .mini-card { background: var(--gris); padding: 15px; border-radius: 8px; text-align: center; }
@@ -111,122 +105,103 @@
         .tag { display: inline-block; background: #e0f2fe; color: var(--bleu); padding: 4px 10px; border-radius: 12px; font-size: 12px; margin: 3px; }
         .tag-vert { background: #dcfce7; color: var(--vert); }
         .tag-orange { background: #fff7ed; color: var(--orange); }
+        .small-note { font-size: 13px; color: var(--gris-fonce); margin-top: 8px; }
+        .sgi-card { background: var(--gris); padding: 12px; border-radius: 8px; margin: 10px 0; }
     </style>
 </head>
 <body>
 
-<!-- 🗣️ ÉCRAN DE CHOIX DE LANGUE AU DÉMARRAGE -->
 <div id="lang-screen">
     <h1>🌍 TCHINJI</h1>
-    <p data-fr="Choisis ta langue" data-ha="Zaɓi harshenka" data-en="Choose your language">Choisis ta langue</p>
+    <p>Choisis ta langue</p>
     <button class="lang-btn" onclick="choisirLangue('fr')">🇫🇷 Français</button>
     <button class="lang-btn" onclick="choisirLangue('ha')">🇳🇭 Haoussa</button>
     <button class="lang-btn" onclick="choisirLangue('en')">🇬🇧 English</button>
 </div>
 
-<!-- 🌍 MODALE POUR CHANGER DE LANGUE EN COURS DE NAVIGATION -->
 <div id="change-lang-modal">
     <div class="modal-content">
-        <h3 data-fr="Choisis ta langue" data-ha="Zaɓi harshenka" data-en="Choose your language">Choisis ta langue</h3>
+        <h3>Choisis ta langue</h3>
         <button class="lang-btn" onclick="choisirLangue('fr'); fermerModalLangue()">🇫🇷 Français</button>
         <button class="lang-btn" onclick="choisirLangue('ha'); fermerModalLangue()">🇳🇭 Haoussa</button>
         <button class="lang-btn" onclick="choisirLangue('en'); fermerModalLangue()">🇬🇧 English</button>
-        <button class="close-btn" onclick="fermerModalLangue()">✕ <span data-fr="Fermer" data-ha="Rufe" data-en="Close">Fermer</span></button>
+        <button class="close-btn" onclick="fermerModalLangue()">✕ Fermer</button>
     </div>
 </div>
 
-<!-- 📱 CONTENU PRINCIPAL -->
 <div id="main-content">
 
-<!-- 🌍 BOUTON CHANGER DE LANGUE EN HAUT -->
 <div class="lang-switcher">
-    <button onclick="ouvrirModalLangue()">🌍 <span data-fr="Changer de langue" data-ha="Canza harshe" data-en="Change language">Changer de langue</span></button>
+    <button onclick="ouvrirModalLangue()">🌍 Changer de langue</button>
 </div>
 
 <header>
     <h1>🌍 TCHINJI</h1>
-    <p data-fr="Échanger • Investir • Envoyer en toute confiance" data-ha="Musanya • Saka hannun jari • Aika da aminci" data-en="Exchange • Invest • Send with confidence">Échanger • Investir • Envoyer en toute confiance</p>
+    <p>Échanger • Investir • Envoyer en toute confiance</p>
 </header>
 
 <nav>
     <ul>
-        <li><a href="#accueil" class="active" onclick="afficherSection('accueil')" data-fr="Accueil" data-ha="Gida" data-en="Home">Accueil</a></li>
-        <li><a href="#apropos" onclick="afficherSection('apropos')" data-fr="ℹ️ À Propos" data-ha="ℹ️ Game mu" data-en="ℹ️ About">ℹ️ À Propos</a></li>
-        <li><a href="#devises" onclick="afficherSection('devises')" data-fr="💱 Devises" data-ha="💱 Kuɗi" data-en="💱 Currencies">💱 Devises</a></li>
-        <li><a href="#trading" onclick="afficherSection('trading')" data-fr="📈 Trading" data-ha="📈 Ciniki" data-en="📈 Trading">📈 Trading</a></li>
-        <li><a href="#investir" onclick="afficherSection('investir')" data-fr="💰 Investir" data-ha="💰 Saka hannun jari" data-en="💰 Invest">💰 Investir</a></li>
-        <li><a href="#prvm" onclick="afficherSection('prvm')" data-fr="🛡️ PRVM" data-ha="🛡️ Kariyar Kuɗi" data-en="🛡️ PRVM">🛡️ PRVM</a></li>
-        <li><a href="#services" onclick="afficherSection('services')" data-fr="🤝 Envoyer" data-ha="🤝 Aika kuɗi" data-en="🤝 Send Money">🤝 Envoyer</a></li>
-        <li><a href="#contact" onclick="afficherSection('contact')" data-fr="📞 Contact" data-ha="📞 Tuntuɓe" data-en="📞 Contact">📞 Contact</a></li>
+        <li><a href="#accueil" class="active" onclick="afficherSection('accueil')">Accueil</a></li>
+        <li><a href="#apropos" onclick="afficherSection('apropos')">À Propos</a></li>
+        <li><a href="#devises" onclick="afficherSection('devises')">Devises</a></li>
+        <li><a href="#trading" onclick="afficherSection('trading')">Trading</a></li>
+        <li><a href="#investir" onclick="afficherSection('investir')">Investir</a></li>
+        <li><a href="#prvm" onclick="afficherSection('prvm')">PRVM</a></li>
+        <li><a href="#services" onclick="afficherSection('services')">Envoyer</a></li>
+        <li><a href="#contact" onclick="afficherSection('contact')">Contact</a></li>
     </ul>
 </nav>
 
-<!-- 🏠 PAGE D'ACCUEIL -->
 <section id="accueil" class="active">
-    <h2 data-fr="Bienvenue sur TCHINJI 👋" data-ha="Barka da zuwa TCHINJI 👋" data-en="Welcome to TCHINJI 👋">Bienvenue sur TCHINJI 👋</h2>
+    <h2>Bienvenue sur TCHINJI 👋</h2>
     
     <div class="succes-box">
-        <p data-fr="✅ Votre plateforme complète : Change de devises, Envoi d'argent, Trading, Investissement et Protection de vos valeurs." data-ha="✅ Cibin dandalin ku: Musanya kuɗi, Aika kuɗi, Ciniki, Saka hannun jari da Kariyar kuɗin ku." data-en="✅ Your complete platform: Currency Exchange, Money Transfer, Trading, Investment and Value Protection.">✅ Votre plateforme complète : Change de devises, Envoi d'argent, Trading, Investissement et Protection de vos valeurs.</p>
+        <p>✅ Votre plateforme complète : Change de devises, Envoi d'argent, Trading, Investissement et PRVM.</p>
     </div>
 
     <div class="grid-2">
-        <button class="btn" onclick="afficherSection('devises')">💱 <span data-fr="Devises" data-ha="Kuɗi" data-en="Currencies">Devises</span></button>
-        <button class="btn btn-violet" onclick="afficherSection('trading')">📈 <span data-fr="Trading" data-ha="Ciniki" data-en="Trading">Trading</span></button>
-        <button class="btn btn-orange" onclick="afficherSection('investir')">💰 <span data-fr="Investir" data-ha="Saka hannun jari" data-en="Invest">Investir</span></button>
+        <button class="btn" onclick="afficherSection('devises')">💱 Devises</button>
+        <button class="btn btn-violet" onclick="afficherSection('trading')">📈 Trading</button>
+        <button class="btn btn-orange" onclick="afficherSection('investir')">💰 Investir</button>
         <button class="btn btn-bleu" onclick="afficherSection('prvm')">🛡️ PRVM</button>
     </div>
 
-    <button class="btn" onclick="afficherSection('apropos')" style="margin-top:20px;">ℹ️ <span data-fr="Découvrir TCHINJI" data-ha="Sanin TCHINJI" data-en="Discover TCHINJI">Découvrir TCHINJI</span></button>
+    <button class="btn" onclick="afficherSection('apropos')" style="margin-top:20px;">ℹ️ Découvrir TCHINJI</button>
 </section>
 
-<!-- ℹ️ À PROPOS COMPLET -->
 <section id="apropos">
-    <h2 data-fr="ℹ️ À Propos de TCHINJI" data-ha="ℹ️ Game TCHINJI" data-en="ℹ️ About TCHINJI">ℹ️ À Propos de TCHINJI</h2>
+    <h2>ℹ️ À Propos de TCHINJI</h2>
     
     <div class="card about-list">
-        <h3 data-fr="🌍 Qu'est-ce que TCHINJI ?" data-ha="🌍 Menene TCHINJI ?" data-en="🌍 What is TCHINJI?">🌍 Qu'est-ce que TCHINJI ?</h3>
-        <p data-fr="TCHINJI est une plateforme de confiance qui regroupe plusieurs services essentiels au même endroit : échange de devises, envoi d'argent, informations de trading, opportunités d'investissement et protection de vos valeurs. Nous intervenons d'abord au Niger, puis dans toute la sous-région." data-ha="TCHINJI dandali ne na aminci wanda ya haɗu da ayyuka da yawa a wuri ɗaya: musanya kuɗi, aika kuɗi, bayanan ciniki, damar saka hannun jari da kariyar kuɗinka. Muna fara aiki a Nijar, sannan mu faɗaɗa zuwa yankin gaba ɗaya." data-en="TCHINJI is a trusted platform bringing together essential services in one place: currency exchange, money transfer, trading information, investment opportunities, and value protection. We start in Niger, then expand across the region.">
-        TCHINJI est une plateforme de confiance qui regroupe plusieurs services essentiels au même endroit : échange de devises, envoi d'argent, informations de trading, opportunités d'investissement et protection de vos valeurs. Nous intervenons d'abord au Niger, puis dans toute la sous-région.</p>
+        <h3>🌍 Qu'est-ce que TCHINJI ?</h3>
+        <p>TCHINJI est votre plateforme de proximité qui regroupe plusieurs services essentiels au même endroit : échange de devises, envoi d'argent, informations sur les marchés financiers, opportunités d'investissement et protection de la valeur de votre argent (PRVM).</p>
     </div>
 
     <div class="card about-list">
-        <h3 data-fr="📈 TRADING — Comprendre les marchés" data-ha="📈 CINIKI — Fahimtar kasuwa" data-en="📈 TRADING — Understanding Markets">📈 TRADING — Comprendre les marchés</h3>
-        <p data-fr="Le trading consiste à acheter et vendre des actifs (devises, actions, matières premières) pour profiter des variations de prix. TCHINJI vous donne des informations et des formations pour comprendre ces marchés sans prendre de risques inutiles." data-ha="Ciniki ya ƙunshi siye da siyar da kayayyaki don cin riba daga canjin farashi. TCHINJI yana ba ku bayanai da horo don fahimtar waɗannan kasuwanni ba tare da haɗarin da bai kamata ba." data-en="Trading involves buying and selling assets to profit from price movements. TCHINJI provides information and education to help you understand these markets without unnecessary risk.">
-        Le trading consiste à acheter et vendre des actifs pour profiter des variations de prix. TCHINJI vous donne des informations et des formations pour comprendre ces marchés sans prendre de risques inutiles.</p>
-        <p><span class="tag tag-vert">✅ Information</span> <span class="tag tag-orange">⚠️ Risque à maîtriser</span> <span class="tag">📚 Formation</span></p>
+        <h3>📈 TRADING — Comprendre les marchés</h3>
+        <p>Le trading consiste à acheter et vendre des actifs pour profiter des variations de prix. TCHINJI vous oriente vers des plateformes régulées pour apprendre et pratiquer en toute sécurité.</p>
+        <p><span class="tag tag-vert">✅ Formation</span> <span class="tag tag-orange">⚠️ Risque à maîtriser</span> <span class="tag">📊 Informations</span></p>
     </div>
 
     <div class="card about-list">
-        <h3 data-fr="💰 INVESTISSEMENT — Faire fructifier son argent" data-ha="💰 SAKA HANNUN JARI — Haɓaka kuɗinka" data-en="💰 INVESTMENT — Growing your money">💰 INVESTISSEMENT — Faire fructifier son argent</h3>
-        <p data-fr="Investir, c'est placer son argent dans des projets ou des initiatives solides qui génèrent des revenus durables. TCHINJI vous propose des opportunités vérifiées et adaptées à votre capacité, pour faire grandir votre patrimoine pas à pas." data-ha="Saka hannun jari shine sanya kuɗinka a cikin ayyuka masu ƙarfi waɗanda suke samar da riba mai dorewa. TCHINJI yana ba ku damar saka hannun jari da aka bincika kuma ta dace da kuɗin ku, don haɓaka dukiyar ku sannu a hankali." data-en="Investing means placing your money in solid projects that generate sustainable income. TCHINJI offers verified opportunities adapted to your capacity, to grow your wealth step by step.">
-        Investir, c'est placer son argent dans des projets ou des initiatives solides qui génèrent des revenus durables. TCHINJI vous propose des opportunités vérifiées et adaptées à votre capacité, pour faire grandir votre patrimoine pas à pas.</p>
-        <p><span class="tag tag-vert">✅ Projets vérifiés</span> <span class="tag">📊 Transparence</span> <span class="tag tag-orange">⏳ Sur le long terme</span></p>
+        <h3>💰 INVESTISSEMENT — Faire fructifier son argent</h3>
+        <p>Pour investir légalement et en toute sécurité au Niger, vous passez par une <strong>SGI — Société de Gestion d'Investissement</strong>, l'établissement régulé qui vous accompagne dans vos placements.</p>
+        <p><span class="tag tag-vert">✅ SGI agréée</span> <span class="tag">📊 Transparence</span> <span class="tag tag-orange">⏳ Sur le long terme</span></p>
     </div>
 
     <div class="card about-list">
-        <h3 data-fr="🛡️ PRVM — Protection de la Valeur Monétaire" data-ha="🛡️ KARIYAR KUƊI — Tsare Darajar Kuɗinka" data-en="🛡️ PRVM — Currency Value Protection">🛡️ PRVM — Protection de la Valeur Monétaire</h3>
-        <p data-fr="Le PRVM est un concept unique de TCHINJI : protéger la valeur de votre argent contre l'inflation et les fluctuations monétaires. Au lieu de voir votre argent perdre de la valeur avec le temps, vous le préservez en le convertissant au bon moment et au bon endroit." data-ha="PRVM manufa ce ta musamman ta TCHINJI: kare darajar kuɗinka daga hauhawar farashin kayayyaki da canjin canjin kuɗi. Maimakon kuɗinka ya rasa daraji, za ku iya kiyaye shi ta hanyar musanya shi a lokacin da ya dace." data-en="PRVM is a unique TCHINJI concept: protecting your money's value against inflation and currency fluctuations. Instead of seeing your money lose value over time, you preserve it by converting at the right time and place.">
-        <strong>Le concept :</strong> Votre argent doit garder son pouvoir d'achat. Le PRVM vous aide à :
-        <br>• Suivre l'évolution des devises
-        <br>• Convertir au bon moment
-        <br>• Éviter les pertes de valeur inutiles</p>
+        <h3>🛡️ PRVM — Protection de la Valeur Monétaire</h3>
+        <p>Le PRVM est notre concept exclusif : protéger la valeur de votre argent contre l'inflation et les fluctuations des devises. Préservez votre pouvoir d'achat en suivant les tendances et en convertissant au bon moment.</p>
         <p><span class="tag tag-vert">✅ Préservation</span> <span class="tag">📈 Suivi</span> <span class="tag tag-bleu">🔒 Sécurité</span></p>
     </div>
-
-    <div class="card about-list">
-        <h3 data-fr="🎯 Notre Mission" data-ha="🎯 Manufarmu" data-en="🎯 Our Mission">🎯 Notre Mission</h3>
-        <p><strong data-fr="✅ Simplicité :" data-ha="✅ Sauƙi :" data-en="✅ Simplicity :">✅ Simplicité :</strong> <span data-fr="Des services clairs, accessibles à tous." data-ha="Ayyuka masu sauƙi, ga kowa." data-en="Clear services, accessible to everyone.">Des services clairs, accessibles à tous.</span></p>
-        <p><strong data-fr="✅ Transparence :" data-ha="✅ Gaskiya :" data-en="✅ Transparency :">✅ Transparence :</strong> <span data-fr="Tous les taux et explications visibles immédiatement." data-ha="Duk adadin kuɗi da bayanai a bayyane." data-en="All rates and explanations visible immediately.">Tous les taux et explications visibles immédiatement.</span></p>
-        <p><strong data-fr="✅ Confiance :" data-ha="✅ Aminci :" data-en="✅ Trust :">✅ Confiance :</strong> <span data-fr="Bâtir des relations solides, étape par étape." data-ha="Gina dangantaka mai ƙarfi, mataki bayan mataki." data-en="Building strong relationships, step by step.">Bâtir des relations solides, étape par étape.</span></p>
-    </div>
 </section>
 
-<!-- 💱 DEVISES -->
 <section id="devises">
-    <h2 data-fr="💱 Convertisseur de Devises" data-ha="💱 Mai Musanya Kuɗi" data-en="💱 Currency Converter">💱 Convertisseur de Devises</h2>
+    <h2>💱 Convertisseur de Devises</h2>
     
     <div class="card">
-        <h3 data-fr="Calculez votre montant" data-ha="Lissafi adadinka" data-en="Calculate your amount">Calculez votre montant</h3>
+        <h3>Calculez votre montant</h3>
         <input type="number" id="montant" placeholder="Montant" value="10000">
         <select id="devisesDepart">
             <option value="XOF" selected>FCFA (XOF)</option>
@@ -234,253 +209,174 @@
             <option value="EUR">Euro (€)</option>
             <option value="NGN">Naira (₦)</option>
         </select>
-        <span style="text-align:center;display:block;margin:8px 0;">↓ <span data-fr="vers" data-ha="zuwa" data-en="to">vers</span> ↓</span>
+        <p style="text-align:center; margin:8px 0;">↓ vers ↓</p>
         <select id="devisesArrivee">
             <option value="XOF" selected>FCFA (XOF)</option>
             <option value="USD">Dollar US ($)</option>
             <option value="EUR">Euro (€)</option>
             <option value="NGN">Naira (₦)</option>
         </select>
-        <button class="btn" onclick="convertir()"><span data-fr="Calculer" data-ha="Lissafi" data-en="Calculate">Calculer</span></button>
+        <button class="btn" onclick="convertir()">Calculer</button>
         <div class="resultat" id="resultat">—</div>
     </div>
     
     <div class="info-box">
-        <p data-fr="💡 Ces taux sont indicatifs. Contactez-nous pour les taux du jour et pour toute opération." data-ha="💡 Waɗannan adadin na nuni ne kawai. Tuntuɓe mu don adadin kuɗin yau da kowane aiki." data-en="💡 These rates are indicative. Contact us for today's live rates and any transaction.">💡 Ces taux sont indicatifs. Contactez-nous pour les taux du jour et pour toute opération.</p>
+        <p>💡 Ces taux sont indicatifs. Pour un échange réel, contactez-moi directement sur WhatsApp :</p>
+        <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 Échanger sur WhatsApp</a>
     </div>
 </section>
 
-<!-- 📈 TRADING -->
 <section id="trading">
-    <h2 data-fr="📈 Trading — Informations et Marchés" data-ha="📈 CINIKI — Bayanai da Kasuwanni" data-en="📈 Trading — Information & Markets">📈 Trading — Informations et Marchés</h2>
+    <h2>📈 Trading — Marchés & Formations</h2>
     
     <div class="avert-box">
-        <p data-fr="⚠️ Important : TCHINJI ne vous demande JAMAIS de déposer de l'argent pour faire du trading. Ce service est uniquement informatif et éducatif. Le trading comporte des risques, ne tradez jamais que ce que vous pouvez perdre." data-ha="⚠️ Muhimmin: TCHINJI BA zai taɓa nema ku ku saka kuɗi don ciniki ba. Wannan sabis na bayanai ne kawai. Ciniki yana da haɗari, kada ku saka kuɗin da ba za ku iya rasa ba." data-en="⚠️ Important: TCHINJI will NEVER ask you to deposit money for trading. This service is for information and education only. Trading involves risks, never trade with money you cannot afford to lose.">
-        ⚠️ Important : TCHINJI ne vous demande JAMAIS de déposer de l'argent pour faire du trading. Ce service est uniquement informatif et éducatif. Le trading comporte des risques, ne tradez jamais que ce que vous pouvez perdre.</p>
+        <p>⚠️ Important : TCHINJI ne demande JAMAIS d'argent pour faire du trading. Le trading comporte des risques importants. Ne tradez jamais que ce que vous pouvez perdre.</p>
     </div>
 
     <div class="card">
-        <h3 data-fr="📊 Qu'est-ce qu'on échange ?" data-ha="📊 Me ake musanya ?" data-en="📊 What is traded?">📊 Qu'est-ce qu'on échange ?</h3>
-        <div class="grid-2">
-            <div class="mini-card">
-                <h4>💵 Devises</h4>
-                <p>EUR/USD, USD/NGN...</p>
-            </div>
-            <div class="mini-card">
-                <h4>🪙 Or</h4>
-                <p>Prix de l'once</p>
-            </div>
-            <div class="mini-card">
-                <h4>🛢️ Pétrole</h4>
-                <p>Évolution du baril</p>
-            </div>
-            <div class="mini-card">
-                <h4>📰 Actualités</h4>
-                <p>Ce qui bouge les marchés</p>
-            </div>
-        </div>
+        <h3>📊 Tendances du Marché</h3>
+        <p>Consultez gratuitement l'évolution des devises, de l'or et des marchés en temps réel pour prendre des décisions éclairées :</p>
+        <a href="https://www.investing.com" target="_blank" class="btn btn-bleu">📊 Voir les tendances du marché</a>
+        <p class="small-note">Redirection vers Investing.com — plateforme d'informations financières indépendante</p>
     </div>
 
     <div class="card">
-        <h3 data-fr="📚 Les 3 Règles d'Or" data-ha="📚 3 Ka'idoji na Zinare" data-en="📚 The 3 Golden Rules">📚 Les 3 Règles d'Or</h3>
-        <p><strong>1️⃣</strong> <span data-fr="N'investissez que ce que vous pouvez perdre" data-ha="Kada ku saka fiye da kuke iya rasa" data-en="Only invest what you can afford to lose">N'investissez que ce que vous pouvez perdre</span></p>
-        <p><strong>2️⃣</strong> <span data-fr="Formez-vous avant de commencer" data-ha="Yi horo kafin fara" data-en="Learn before you start">Formez-vous avant de commencer</span></p>
-        <p><strong>3️⃣</strong> <span data-fr="Personne ne gagne tout le temps" data-ha="Babu wanda yake cin riba a kowane lokaci" data-en="Nobody wins all the time">Personne ne gagne tout le temps</span></p>
+        <h3>🎓 Apprendre sans risque — Mode Démo</h3>
+        <p>Commencez par le compte démo pour vous former et comprendre le fonctionnement des marchés sans utiliser de l'argent réel. C'est la meilleure façon d'apprendre :</p>
+        <a href="https://www.exness.com/fr/demo-account/" target="_blank" class="btn btn-exness">📖 Ouvrir un compte démo gratuit</a>
+        <p class="small-note">Redirection vers Exness — pratiquez sans déposer d'argent</p>
     </div>
 
     <div class="card">
-        <h3 data-fr="📬 Recevoir les analyses" data-ha="📬 Karɓar nazari" data-en="📬 Get Market Updates">📬 Recevoir les analyses du marché</h3>
-        <p data-fr="Écrivez-nous pour recevoir régulièrement les tendances des marchés directement par WhatsApp." data-ha="Rubuta mana don karɓar bayanan kasuwa ta WhatsApp a kai a kai." data-en="Write to us to receive market trends directly on WhatsApp.">Écrivez-nous pour recevoir régulièrement les tendances des marchés directement par WhatsApp.</p>
-        <a href="https://wa.me/22789214167" target="_blank" class="whatsapp-btn">💬 <span data-fr="S'inscrire" data-ha="Shiga" data-en="Subscribe">S'inscrire aux analyses</span></a>
+        <h3>🚀 Accès à la plateforme de trading</h3>
+        <p>Une fois formé et prêt à passer au réel, vous pouvez accéder à une plateforme régulée :</p>
+        <a href="https://www.exness.com/fr" target="_blank" class="btn btn-exness">🔗 Accéder à Exness</a>
+        <p class="small-note">⚠️ À vous de lire les conditions générales et de trader de manière responsable</p>
     </div>
 </section>
 
-<!-- 💰 INVESTIR -->
 <section id="investir">
-    <h2 data-fr="💰 Investir — Faire fructifier son argent" data-ha="💰 SAKA HANNUN JARI — Haɓaka Kuɗinka" data-en="💰 INVEST — Grow Your Money">💰 Investir — Faire fructifier son argent</h2>
+    <h2>💰 Investir — Faire fructifier son argent</h2>
     
     <div class="succes-box">
-        <p data-fr="✅ Investir, c'est faire travailler son argent pour soi, sur le long terme." data-ha="✅ Saka hannun jari yana sa kuɗinka yayi aiki don ka, a kan dogon lokaci." data-en="✅ Investing means making your money work for you, over the long term.">✅ Investir, c'est faire travailler son argent pour soi, sur le long terme.</p>
+        <p>✅ Investir, c'est placer son argent dans des projets solides sur le long terme. Au Niger, passez par une SGI agréée pour être en règle et protégé.</p>
     </div>
 
     <div class="card">
-        <h3 data-fr="🌍 Nos axes d'investissement" data-ha="🌍 Yankunan saka hannun jari" data-en="🌍 Our Investment Areas">🌍 Nos axes d'investissement</h3>
+        <h3>🤝 Comment ça se passe ?</h3>
+        <p>Deux options s'offrent à vous — <strong>vous choisissez ce qui vous convient le mieux :</strong></p>
         
-        <h4>🏡 Immobilier & Terres</h4>
-        <p data-fr="Acquisition de terrains dans des zones en développement." data-ha="Samun filaye a yankunan da ake haɓakawa." data-en="Land acquisition in developing areas.">Acquisition de terrains dans des zones en développement.</p>
+        <p style="margin-top:15px;"><strong>Option 1 — Être accompagné par moi :</strong> Je vous explique la démarche, je réponds à vos questions, et je vous oriente vers la bonne structure. Je ne gère pas votre argent — je suis votre conseiller de proximité.</p>
+        <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 Me contacter pour être guidé</a>
         
-        <h4>🌾 Agriculture & Élevage</h4>
-        <p data-fr="Soutenir des projets agricoles rentables au Niger." data-ha="Tallafafin ayyukan noma masu fa'ida a Nijar." data-en="Supporting profitable agricultural projects in Niger.">Soutenir des projets agricoles rentables au Niger.</p>
+        <p style="margin-top:25px;"><strong>Option 2 — Aller directement auprès d'une SGI :</strong> Vous pouvez également contacter directement une SGI agréée pour ouvrir votre compte d'investisseur. Voici quelques structures connues à Niamey :</p>
+    </div>
+
+    <div class="card">
+        <h3>🏛️ SGI agréées au Niger</h3>
+        <p class="small-note">📌 Ces informations sont données à titre indicatif. Vérifiez toujours que la SGI est bien agréée par l'Autorité des Marchés Financiers du Niger avant tout engagement.</p>
         
-        <h4>🏪 Commerce Local</h4>
-        <p data-fr="Aider des commerçants sérieux à développer leurs activités." data-ha="Taimakon 'yan kasuwa masu aminci su haɓaka kasuwancinsu." data-en="Helping serious merchants grow their businesses.">Aider des commerçants sérieux à développer leurs activités.</p>
+        <div class="sgi-card">
+            <p><strong>SGI — À compléter prochainement</strong><br>
+            📍 Niamey — Adresse à venir<br>
+            📞 Téléphone à venir</p>
+        </div>
+        
+        <div class="sgi-card">
+            <p><strong>SGI — À compléter prochainement</strong><br>
+            📍 Niamey — Adresse à venir<br>
+            📞 Téléphone à venir</p>
+        </div>
+        
+        <div class="sgi-card">
+            <p><strong>SGI — À compléter prochainement</strong><br>
+            📍 Niamey — Adresse à venir<br>
+            📞 Téléphone à venir</p>
+        </div>
+
+        <p class="small-note" style="margin-top:15px;">ℹ️ <strong>Pour obtenir la liste officielle et à jour des SGI agréées :</strong> rendez-vous auprès de l'Autorité des Marchés Financiers du Niger. Je vous recommande toujours de vérifier l'agrément de la structure avant toute démarche.</p>
     </div>
 
     <div class="avert-box">
-        <p data-fr="⏳ Rappel : Un bon investissement se mesure sur des années, pas des jours. Il n'y a pas de rendement garanti — chaque projet a ses risques que nous vous expliquons en détail." data-ha="⏳ Tunƙaya: Kyakkyawan saka hannun jari ana auna shi da shekaru, ba kwanaki ba. Babu ribar da aka tabbatar — kowane aiki yana da haɗarinsa wanda muke bayyana muku dalla-dalla." data-en="⏳ Reminder: A good investment is measured in years, not days. There is no guaranteed return — every project has risks we explain in detail.">
-        ⏳ Rappel : Un bon investissement se mesure sur des années, pas des jours. Il n'y a pas de rendement garanti — chaque projet a ses risques que nous vous expliquons en détail.</p>
+        <p>⏳ Rappel important : Il n'y a pas de rendement garanti. Chaque projet a ses risques que la SGI vous explique en détail lors de votre rencontre. Méfiez-vous des promesses de gains rapides et trop élevés — ce sont souvent des pièges.</p>
     </div>
-
-    <div class="card">
-        <h3 data-fr="📋 Pourquoi nous rejoindre ?" data-ha="📋 Me yasa za ku zo tare da mu ?" data-en="📋 Why Join Us?">📋 Pourquoi nous rejoindre ?</h3>
-        <p>🤝 <span data-fr="Projets vérifiés sur place" data-ha="Ayyukan da aka bincika a gani" data-en="Projects verified on-site">Projets vérifiés sur place</span></p>
-        <p>📊 <span data-fr="Suivi régulier de votre placement" data-ha="Bibiyar saka hannun jari akai-akai" data-en="Regular updates on your investment">Suivi régulier de votre placement</span></p>
-        <p>💬 <span data-fr="Transparence totale avec nos partenaires" data-ha="Cikakken gaskiya tare da abokan aikinmu" data-en="Full transparency with our partners">Transparence totale avec nos partenaires</span></p>
-    </div>
-
-    <a href="https://wa.me/22789214167" target="_blank" class="whatsapp-btn">💬 <span data-fr="Discuter d'un projet" data-ha="Tattauna aiki" data-en="Discuss a project">Discuter d'un projet</span></a>
 </section>
 
-<!-- 🛡️ PRVM -->
 <section id="prvm">
-    <h2 data-fr="🛡️ PRVM — Protection de la Valeur Monétaire" data-ha="🛡️ KARIYAR KUƊI — Tsare Darajar Kuɗinka" data-en="🛡️ PRVM — Currency Value Protection">🛡️ PRVM — Protection de la Valeur Monétaire</h2>
+    <h2>🛡️ PRVM — Protection de la Valeur Monétaire</h2>
     
     <div class="succes-box">
-        <p style="font-size:17px; font-weight:500;" data-fr="Le concept simple : Votre argent doit conserver son pouvoir d'achat, peu importe ce qui se passe autour de vous." data-ha="Tunanin mai sauƙi: Kuɗinka yakamata ya kiyaye darajarsa, komi ya faru a kusa da ku." data-en="The simple concept: Your money should keep its purchasing power, no matter what happens around you.">Le concept simple : Votre argent doit conserver son pouvoir d'achat, peu importe ce qui se passe autour de vous.</p>
+        <p style="font-size:17px; font-weight:500;">Le concept simple : Votre argent doit conserver son pouvoir d'achat, peu importe ce qui se passe autour de vous.</p>
     </div>
 
     <div class="card">
-        <h3 data-fr="❓ Pourquoi protéger sa valeur ?" data-ha="❓ Me yasa za a kiyaye daraja ?" data-en="❓ Why Protect Value?">❓ Pourquoi protéger sa valeur ?</h3>
-        <p data-fr="L'inflation fait monter les prix année après année. 100 000 FCFA aujourd'hui n'achèteront pas la même chose dans 3 ans. Le PRVM vous aide à préserver ce pouvoir d'achat." data-ha="Hauhawar farashin kayayyaki yana ƙaruwa shekara bayan shekara. Kuɗi 100,000 na yau ba zai iya saya abu ɗaya ba bayan shekaru 3. PRVM yana taimaka muku kiyaye wannan ikon siye." data-en="Inflation pushes prices up year after year. 100,000 FCFA today won't buy the same things in 3 years. PRVM helps you preserve that purchasing power.">
-        L'inflation fait monter les prix année après année. 100 000 FCFA aujourd'hui n'achèteront pas la même chose dans 3 ans. Le PRVM vous aide à préserver ce pouvoir d'achat.</p>
+        <h3>❓ Pourquoi protéger sa valeur ?</h3>
+        <p>L'inflation fait monter les prix année après année. 100 000 FCFA aujourd'hui n'achèteront pas la même chose dans 3 ans. Le PRVM vous aide à anticiper ces changements et à préserver votre pouvoir d'achat.</p>
     </div>
 
     <div class="card">
-        <h3 data-fr="🔑 Les 3 piliers du PRVM" data-ha="🔑 Ginshikai 3 na PRVM" data-en="🔑 The 3 Pillars of PRVM">🔑 Les 3 piliers du PRVM</h3>
-        
+        <h3>🔑 Les 3 piliers du PRVM</h3>
         <div class="etape">
             <div class="etape-num">1</div>
             <div class="etape-texte">
-                <h4 data-fr="📊 Suivre les taux" data-ha="📊 Bibiyar adadin kuɗi" data-en="📊 Monitor Rates">Suivre les taux</h4>
-                <p data-fr="Savoir où va chaque devise pour anticiper les mouvements." data-ha="Sanin inda kowane kuɗi ke tafiya don sanin abin da zai faru." data-en="Knowing where each currency is heading to anticipate movements.">Savoir où va chaque devise pour anticiper les mouvements.</p>
+                <h4>📊 Suivre les tendances</h4>
+                <p>Consultez l'évolution des devises pour savoir quel est le bon moment pour convertir.</p>
             </div>
         </div>
-
         <div class="etape">
             <div class="etape-num">2</div>
             <div class="etape-texte">
-                <h4 data-fr="🔄 Convertir au bon moment" data-ha="🔄 Musanya a lokacin da ya dace" data-en="🔄 Convert at the Right Time">Convertir au bon moment</h4>
-                <p data-fr="Changer progressivement quand c'est avantageux, pas dans la panique." data-ha="Musanya sannu a hankali idan ya yi fa'ida, ba cikin firgici ba." data-en="Convert gradually when it's advantageous, not in panic.">Changer progressivement quand c'est avantageux, pas dans la panique.</p>
+                <h4>🔄 Convertir au bon moment</h4>
+                <p>Changez progressivement quand c'est avantageux, pas dans la panique ou l'urgence.</p>
             </div>
         </div>
-
         <div class="etape">
             <div class="etape-num">3</div>
             <div class="etape-texte">
-                <h4 data-fr="🔒 Diversifier ses avoirs" data-ha="🔒 Raba kuɗinka" data-en="🔒 Diversify Your Assets">Diversifier ses avoirs</h4>
-                <p data-fr="Ne pas garder tout son argent dans une seule devise." data-ha="Kada ka ajiye duk kuɗinka a cikin kuɗi ɗaya kawai." data-en="Don't keep all your money in just one currency.">Ne pas garder tout son argent dans une seule devise.</p>
+                <h4>🏛️ Diversifier légalement</h4>
+                <p>La SGI vous aide à répartir vos avoirs en toute sécurité et en toute légalité.</p>
             </div>
         </div>
     </div>
 
-    <div class="info-box">
-        <p data-fr="💡 Le PRVM n'est pas un produit miracle. C'est une méthode de bon sens : préserver ce que vous avez déjà patiemment construit." data-ha="💡 PRVM ba abin al'ajibi ba ne. Hanya ce ta hankali: kiyaye abin da kuka gina cikin haƙuri." data-en="💡 PRVM is not a miracle product. It's a common-sense approach: preserving what you've patiently built.">
-        💡 Le PRVM n'est pas un produit miracle. C'est une méthode de bon sens : préserver ce que vous avez déjà patiemment construit.</p>
+    <div class="card">
+        <h3>📈 Suivre les taux et tendances</h3>
+        <p>Pour savoir quand convertir et préserver la valeur de votre argent, accédez gratuitement aux informations du marché :</p>
+        <a href="https://www.investing.com/currencies/" target="_blank" class="btn btn-bleu">📊 Voir les taux et tendances</a>
     </div>
 
-    <a href="https://wa.me/22789214167" target="_blank" class="whatsapp-btn">💬 <span data-fr="En savoir plus sur le PRVM" data-ha="Sanin ƙarin bayani game da PRVM" data-en="Learn more about PRVM">En savoir plus sur le PRVM</span></a>
+    <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 En savoir plus sur le PRVM</a>
 </section>
 
-<!-- 🤝 ENVOYER DE L'ARGENT -->
 <section id="services">
-    <h2 data-fr="🤝 Envoyer de l'argent au Niger" data-ha="🤝 Aika Kuɗi Zuwa Nijar" data-en="🤝 Send Money to Niger">🤝 Envoyer de l'argent au Niger</h2>
+    <h2>🤝 Échanger ou Envoyer de l'argent</h2>
 
     <div class="card">
-        <h3 data-fr="💡 Comment ça fonctionne ?" data-ha="💡 Yaya yake Aiki ?" data-en="💡 How Does It Work?">💡 Comment ça fonctionne ?</h3>
+        <h3>💡 Comment ça marche ?</h3>
         
         <div class="etape">
             <div class="etape-num">1</div>
             <div class="etape-texte">
-                <h4 data-fr="Contactez-nous" data-ha="Tuntuɓe Mu" data-en="Contact Us">Contactez-nous</h4>
-                <p data-fr="Écrivez-nous sur WhatsApp — montant, destinataire et ville." data-ha="Rubuta mana ta WhatsApp — adadin kuɗi, wanda za a aika, da birni." data-en="Write to us on WhatsApp — amount, recipient and city.">Écrivez-nous sur WhatsApp — montant, destinataire et ville.</p>
+                <h4>Contacte-moi sur WhatsApp</h4>
+                <p>Dis-moi le montant, la ville et la devise dont tu as besoin.</p>
             </div>
         </div>
 
         <div class="etape">
             <div class="etape-num">2</div>
             <div class="etape-texte">
-                <h4 data-fr="Nous convenons du taux" data-ha="Mun Amince da Adadin Kuɗi" data-en="We Agree on the Rate">Nous convenons du taux ensemble</h4>
-                <p data-fr="Réponse rapide, montant clair — pas de surprise." data-ha="Amsa da sauri, adadin da a gani — babu abin mamaki." data-en="Quick reply, clear amount — no surprises.">Réponse rapide, montant clair — pas de surprise.</p>
+                <h4>On valide ensemble</h4>
+                <p>Je te donne le taux du jour — clair, transparent et sans surprise.</p>
             </div>
         </div>
 
         <div class="etape">
             <div class="etape-num">3</div>
             <div class="etape-texte">
-                <h4 data-fr="Remise en main propre" data-ha="Bayar da Kuɗin Kai Tsaye" data-en="Hand-Delivered">Remise en main propre au Niger</h4>
-                <p data-fr="Votre proche récupère l'argent en toute sécurité." data-ha="Danginka ya karɓi kuɗin cikin aminci." data-en="Your loved one collects the money safely.">Votre proche récupère l'argent en toute sécurité.</p>
+                <h4>Rencontre en toute confiance</h4>
+                <p>À Niamey ou dans une ville proche, on se retrouve pour finaliser l'échange.</p>
             </div>
         </div>
     </div>
 
-    <a href="https://wa.me/22789214167" target="_blank" class="whatsapp-btn">💬 <span data-fr="Commencer un envoi" data-ha="Fara Aika Kuɗi" data-en="Start a Transfer">Commencer un envoi</span></a>
-</section>
-
-<!-- 📞 CONTACT -->
-<section id="contact">
-    <h2 data-fr="📞 Nous Contacter" data-ha="📞 Tuntuɓe Mu" data-en="📞 Contact Us">📞 Nous Contacter</h2>
-    <div class="card" style="text-align:center; padding:25px;">
-        <p style="font-size:18px; font-weight:bold; color:#166534; margin-bottom:15px;">📞 WhatsApp : +227 89 21 41 67</p>
-        <p style="color:var(--gris-fonce); margin-bottom:20px;" data-fr="Disponible tous les jours pour vous accompagner" data-ha="Ana samunmu kowace rana domin taimakon ku" data-en="Available every day to assist you">Disponible tous les jours pour vous accompagner</p>
-        <a href="https://wa.me/22789214167" target="_blank" class="whatsapp-btn">💬 <span data-fr="Discuter maintenant" data-ha="Tattauna Yanzu" data-en="Chat Now">Discuter maintenant</span></a>
-    </div>
-</section>
-
-</div>
-
-<script>
-let langueActuelle = 'fr';
-
-// ===== CHOIX DE LANGUE AU DÉMARRAGE =====
-function choisirLangue(lang) {
-    langueActuelle = lang;
-    document.getElementById('lang-screen').style.display = 'none';
-    document.getElementById('main-content').classList.add('visible');
-    appliquerLangue(lang);
-}
-
-function appliquerLangue(lang) {
-    document.querySelectorAll('[data-fr]').forEach(el => {
-        el.textContent = el.getAttribute(`data-${lang}`);
-    });
-}
-
-// ===== FONCTIONS POUR CHANGER DE LANGUE EN COURS DE NAVIGATION =====
-function ouvrirModalLangue() {
-    document.getElementById('change-lang-modal').classList.add('show');
-}
-
-function fermerModalLangue() {
-    document.getElementById('change-lang-modal').classList.remove('show');
-}
-
-function afficherSection(id) {
-    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-    event.target.classList.add('active');
-    window.scrollTo(0, 0);
-}
-
-function convertir() {
-    const montant = parseFloat(document.getElementById('montant').value);
-    const depart = document.getElementById('devisesDepart').value;
-    const arrivee = document.getElementById('devisesArrivee').value;
-    
-    const taux = {
-        'XOF-USD': 0.00163, 'USD-XOF': 610,
-        'XOF-EUR': 0.00150, 'EUR-XOF': 668,
-        'XOF-NGN': 1.55, 'NGN-XOF': 0.645,
-        'USD-EUR': 0.92, 'EUR-USD': 1.09,
-        'USD-NGN': 1550, 'NGN-USD': 0.000645,
-    };
-    
-    const cle = depart + '-' + arrivee;
-    const resultat = montant * (taux[cle] || 1);
-    
-    document.getElementById('resultat').textContent = resultat.toFixed(2) + ' ' + arrivee;
-}
-</script>
-
-</body>
-</html>
+    <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 Me contacter pour un é
