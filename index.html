@@ -3,108 +3,589 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCHINJI — Échange de devises</title>
+    <title>TCHINJI — Apprendre • S'entraîner • Investir</title>
     <style>
-        *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Roboto,Arial,sans-serif}
-        body{background:linear-gradient(135deg,#0F2758 0%,#2563EB 100%);min-height:100vh;padding:20px;display:flex;align-items:center;justify-content:center}
-        .container{width:100%;max-width:440px;background:#ffffff;border-radius:24px;padding:35px 28px;box-shadow:0 10px 40px rgba(0,0,0,0.25)}
-        .logo-section{text-align:center;margin-bottom:8px}
-        .logo-circle{width:90px;height:90px;background:linear-gradient(135deg,#0F2758,#2563EB);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;box-shadow:0 4px 15px rgba(37,99,235,0.35)}
-        .logo-text{font-size:38px;font-weight:900;color:#FFD700;letter-spacing:-1px}
-        h1{font-size:30px;color:#0F2758;font-weight:800;letter-spacing:1px;text-align:center;margin-bottom:5px}
-        .slogan{text-align:center;color:#64748B;font-size:15px;margin-bottom:32px}
-        .form-group{margin-bottom:20px}
-        label{display:block;margin-bottom:8px;font-weight:600;color:#334155;font-size:15px}
-        select,input{width:100%;padding:14px 16px;border:2px solid #E2E8F0;border-radius:12px;font-size:16px;background-color:#FAFBFC}
-        select:focus,input:focus{outline:none;border-color:#2563EB}
-        .btn-convertir{width:100%;background:linear-gradient(135deg,#0F2758,#2563EB);color:#ffffff;padding:16px;border:none;border-radius:12px;font-size:18px;font-weight:700;cursor:pointer;margin-top:5px;transition:transform 0.2s}
-        .btn-convertir:active{transform:scale(0.98)}
-        .resultat{margin-top:25px;padding:22px;background:#F0FDF4;border-radius:12px;display:none;border-left:4px solid #16A34A}
-        .resultat.visible{display:block;animation:fadeIn 0.4s ease}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-        .montant-converti{font-size:22px;font-weight:800;color:#166534;text-align:center;line-height:1.4}
-        .info-taux{text-align:center;margin-top:10px;font-size:12px;color:#78716C}
-        .footer{text-align:center;margin-top:30px;color:#ffffff;font-size:12px;opacity:0.8}
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        :root { --vert: #008C45; --orange: #F59E0B; --bleu: #0284C7; --rouge: #DC2626; --blanc: #fff; --gris: #f3f4f6; --noir: #1f2937; }
+        body { background: var(--gris); color: var(--noir); line-height: 1.6; padding-bottom: 80px; }
+        
+        #lang-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--vert), #006B34); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; padding: 20px; }
+        #lang-screen h1 { color: white; font-size: 28px; margin-bottom: 10px; }
+        #lang-screen p { color: rgba(255,255,255,0.8); margin-bottom: 40px; text-align: center; }
+        .lang-btn { background: white; border: none; border-radius: 12px; padding: 18px 30px; width: 100%; max-width: 300px; font-size: 18px; font-weight: bold; color: var(--vert); cursor: pointer; margin: 8px 0; transition: transform 0.2s; }
+        .lang-btn:hover { transform: scale(1.03); }
+        
+        header { background: linear-gradient(135deg, var(--vert), #006B34); color: white; padding: 20px; text-align: center; }
+        .lang-switch { position: absolute; top: 15px; right: 15px; }
+        .lang-switch button { background: rgba(255,255,255,0.2); border: none; color: white; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        
+        nav { position: sticky; top: 0; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 100; }
+        nav ul { display: flex; overflow-x: auto; list-style: none; padding: 0; }
+        nav li { flex-shrink: 0; }
+        nav a { display: block; padding: 12px 10px; text-decoration: none; color: var(--noir); font-size: 13px; font-weight: 500; }
+        nav a.active { border-bottom: 3px solid var(--vert); color: var(--vert); font-weight: bold; }
+        
+        section { padding: 20px; display: none; }
+        section.active { display: block; }
+        
+        h2 { color: var(--vert); margin-bottom: 15px; font-size: 20px; }
+        h3 { font-size: 17px; margin: 15px 0 10px; }
+        
+        .card { background: white; border-radius: 12px; padding: 18px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        
+        .btn { display: block; background: var(--vert); color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; text-align: center; border: none; font-size: 16px; cursor: pointer; margin: 8px 0; width: 100%; }
+        .btn-orange { background: var(--orange); }
+        .btn-bleu { background: var(--bleu); }
+        .btn-externe { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+        .btn-exness { background: linear-gradient(135deg, #333, #444); }
+        .btn-sm { display: inline-block; width: auto; padding: 8px 15px; font-size: 14px; margin: 5px 5px 5px 0; }
+        
+        .avertissement { background: #fef3c7; border-left: 4px solid var(--orange); padding: 12px; margin: 15px 0; border-radius: 4px; font-size: 14px; }
+        .avertissement-rouge { background: #fef2f2; border-left: 4px solid var(--rouge); padding: 12px; margin: 15px 0; border-radius: 4px; font-size: 14px; }
+        .info-box { background: #e0f2fe; border-left: 4px solid #0284c7; padding: 12px; margin: 15px 0; border-radius: 4px; font-size: 14px; }
+        
+        .etape { display: flex; gap: 12px; margin: 15px 0; }
+        .etape-num { background: var(--vert); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
+        .etape-texte { flex: 1; }
+        .etape-texte h4 { font-size: 15px; margin-bottom: 3px; }
+        .etape-texte p { font-size: 14px; color: #555; }
+        
+        .partenaire-badge { background: #f0fdf4; border: 2px solid var(--vert); border-radius: 8px; padding: 12px; text-align: center; margin: 10px 0; }
+        .partenaire-badge h4 { color: var(--vert); font-size: 16px; margin-bottom: 5px; }
+        .partenaire-badge p { font-size: 13px; color: #555; margin-bottom: 8px; }
+        .partenaires-titre { text-align: center; color: var(--vert); font-weight: bold; margin: 25px 0 10px; font-size: 18px; }
+        
+        .chapitre { border-left: 3px solid #ddd; padding-left: 15px; margin: 20px 0; }
+        .chapitre.ouvert { border-color: var(--vert); background: #f9fafb; padding: 15px; border-radius: 0 8px 8px 0; }
+        .chapitre h4 { cursor: pointer; padding: 8px 0; font-size: 16px; }
+        .contenu-lecture { display: none; margin-top: 10px; font-size: 15px; line-height: 1.8; color: #374151; }
+        .contenu-lecture.visible { display: block; }
+        
+        .demo-compte { background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
+        .demo-solde { font-size: 28px; font-weight: bold; margin: 10px 0; }
+        .demo-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+        .action-card { background: white; border-radius: 8px; padding: 12px; color: var(--noir); }
+        .action-card .nom { font-weight: bold; font-size: 14px; }
+        .action-card .prix { font-size: 18px; font-weight: bold; margin: 5px 0; }
+        .action-card .var-plus { color: #008C45; font-size: 13px; }
+        .action-card .var-moins { color: #DC2626; font-size: 13px; }
+        .portfolio-list { margin-top: 15px; }
+        .portfolio-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+        
+        .quiz-box { background: #fef9c3; padding: 15px; border-radius: 8px; margin-top: 20px; }
+        .quiz-options { margin-top: 10px; }
+        .quiz-option { display: block; padding: 10px; margin: 5px 0; background: white; border-radius: 6px; cursor: pointer; border: 2px solid transparent; }
+        .quiz-option:hover { border-color: var(--bleu); }
+        .quiz-option.bonne-reponse { border-color: #008C45; background: #f0fdf4; }
+        .quiz-option.mauvaise-reponse { border-color: #DC2626; background: #fef2f2; }
+        .quiz-feedback { margin-top: 10px; font-weight: bold; }
+        .inscrire-box { background: #e0f2fe; border-radius: 8px; padding: 15px; margin-top: 15px; text-align: center; }
+        
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; }
+        .resultat { font-size: 22px; font-weight: bold; color: var(--vert); text-align: center; padding: 15px; }
+        
+        table { width: 100%; font-size: 13px; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; text-align: center; border-bottom: 1px solid #eee; }
+        th { background: #f3f4f6; }
+        
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo-section">
-            <div class="logo-circle"><span class="logo-text">T</span></div>
-            <h1>TCHINJI</h1>
-            <p class="slogan">Échange de devises — Rapide, Sécurisé & Local</p>
+
+<div id="lang-screen">
+    <h1>🌍 TCHINJI</h1>
+    <p>Choisis ta langue / Zaɓi harshenka / Choose your language</p>
+    <button class="lang-btn" onclick="choisirLangue('fr')">🇫🇷 Français</button>
+    <button class="lang-btn" onclick="choisirLangue('ha')">🇳🇭 Haoussa</button>
+    <button class="lang-btn" onclick="choisirLangue('en')">🇬🇧 English</button>
+</div>
+
+<div id="main-content" class="hidden">
+
+<header>
+    <div class="lang-switch">
+        <button onclick="retourLangue()">🌐</button>
+    </div>
+    <h1>🌍 TCHINJI</h1>
+    <p data-fr="Apprendre • S'entraîner • Investir en confiance" data-ha="Koyo • Koyarwa • Zuba da amana" data-en="Learn • Practice • Invest with confidence">Apprendre • S'entraîner • Investir en confiance</p>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#accueil" class="active" onclick="afficherSection('accueil')" data-fr="Accueil" data-ha="Gida" data-en="Home">Accueil</a></li>
+        <li><a href="#lecture" onclick="afficherSection('lecture')" data-fr="📖 Lire & Apprendre" data-ha="📖 Karatu" data-en="📖 Read & Learn">📖 Lire & Apprendre</a></li>
+        <li><a href="#demo" onclick="afficherSection('demo')" data-fr="🎮 Mode Démo" data-ha="🎮 Koyarwa" data-en="🎮 Practice Mode">🎮 Mode Démo</a></li>
+        <li><a href="#inscription" onclick="afficherSection('inscription')" data-fr="📝 S'inscrire" data-ha="📝 Rajista" data-en="📝 Get Started">📝 S'inscrire</a></li>
+        <li><a href="#devises" onclick="afficherSection('devises')" data-fr="💱 Devises" data-ha="💱 Kuɗi" data-en="💱 Currencies">💱 Devises</a></li>
+    </ul>
+</nav>
+
+<section id="accueil" class="active">
+    <h2 data-fr="Bienvenue sur TCHINJI 👋" data-ha="Barka da zuwa TCHINJI 👋" data-en="Welcome to TCHINJI 👋">Bienvenue sur TCHINJI 👋</h2>
+    
+    <div class="card">
+        <h3 data-fr="Notre mission" data-ha="Manufarmu" data-en="Our mission">Notre mission</h3>
+        <p data-fr="Apprendre à investir gratuitement, sans risque. Lis les cours, teste tes connaissances, et entraîne-toi avec de l'argent virtuel." data-ha="Koyi yadda za a saka hannun jari kyauta, ba tare da haɗari ba. Karanta littattafai, gwada ilimin ka, kuma ka yi amfani da kuɗin kwaikwayo." data-en="Learn to invest for free, with no risk. Read lessons, test your knowledge, and practice with virtual money.">Apprendre à investir gratuitement, sans risque. Lis les cours, teste tes connaissances, et entraîne-toi avec de l'argent virtuel.</p>
+    </div>
+
+    <button class="btn" onclick="afficherSection('lecture')" data-fr="📖 Commencer à lire" data-ha="📖 Fara karatu" data-en="📖 Start reading">📖 Commencer à lire</button>
+    <button class="btn btn-bleu" onclick="afficherSection('demo')" data-fr="🎮 S'entraîner en démo" data-ha="🎮 Koyarwa" data-en="🎮 Practice mode">🎮 S'entraîner en démo</button>
+    <button class="btn btn-orange" onclick="afficherSection('inscription')" data-fr="📝 Comment s'inscrire ?" data-ha="📝 Yadda ake yin rajista?" data-en="📝 How to get started?">📝 Comment s'inscrire ?</button>
+
+    <h3 class="partenaires-titre" data-fr="🤝 Nos Partenaires" data-ha="🤝 Abokan Hulɗawarmu" data-en="🤝 Our Partners">🤝 Nos Partenaires</h3>
+    
+    <p style="text-align:center; font-size:14px; color:#666; margin-bottom:15px;" data-fr="TCHINJI collabore avec des SGI agréées pour vous accompagner dans vos premiers pas en Bourse." data-ha="TCHINJI tana aiki tare da SGI masu izini domin su taimake ka a farkon tafiyarka a kasuwar hannun jari." data-en="TCHINJI works with authorized brokerage firms to guide you in your first steps on the stock market.">TCHINJI collabore avec des SGI agréées pour vous accompagner dans vos premiers pas en Bourse.</p>
+
+    <div class="partenaire-badge">
+        <h4>🏛️ Liste des SGI agréées</h4>
+        <p data-fr="Ouvrez un compte-titres pour commencer à investir en Bourse" data-ha="Buɗe asusu domin fara saka hannun jari" data-en="Open a securities account to start investing">Ouvrez un compte-titres pour commencer à investir en Bourse</p>
+        <button class="btn btn-externe" onclick="window.open('https://www.brvm.org/fr/les-sgi-agrees', '_blank')">🔗 Voir la liste complète et s'inscrire</button>
+    </div>
+
+    <div class="info-box">
+        ⚠️ <strong data-fr="Important :" data-ha="Mahimmin :" data-en="Important :"></strong>
+        <span data-fr="L'inscription se fait directement auprès de la SGI de ton choix. TCHINJI ne perçoit aucun frais et ne détient pas tes fonds." data-ha="Ana yin rajista kai tsaye tare da SGI da kake so. TCHINJI ba ya karɓar kuɗi kuma ba ya riƙe kuɗin ka." data-en="Registration is done directly with the SGI of your choice. TCHINJI collects no fees and does not hold your funds.">L'inscription se fait directement auprès de la SGI de ton choix. TCHINJI ne perçoit aucun frais et ne détient pas tes fonds.</span>
+    </div>
+</section>
+
+<section id="inscription">
+    <h2 data-fr="📝 Comment s'inscrire pour investir ou trader ?" data-ha="📝 Yadda ake yin rajista domin saka hannun jari ko kasuwanci?" data-en="📝 How to register to invest or trade?">📝 Comment s'inscrire pour investir ou trader ?</h2>
+    
+    <div class="card">
+        <h3 style="color:var(--vert);">🏛️ Option 1 : Passer par une SGI — Investir en Bourse</h3>
+        <p style="font-size:14px; color:#666; margin-bottom:15px;">SGI = Société de Gestion et d'Intermédiation — Ce sont les seuls agréés pour acheter/vendre des actions à la BRVM.</p>
+        
+        <h4>📋 Documents à préparer :</h4>
+        <ul style="margin-left:20px; margin-bottom:20px; font-size:14px;">
+            <li>Pièce d'identité (Carte nationale d'identité, passeport ou permis de conduire)</li>
+            <li>Photographie d'identité récente</li>
+            <li>Justificatif de domicile (facture d'électricité, eau ou attestation de résidence)</li>
+            <li>Quelques frais d'ouverture de compte (variables selon la SGI)</li>
+        </ul>
+
+        <h4>📌 Étapes d'inscription :</h4>
+        
+        <div class="etape">
+            <div class="etape-num">1</div>
+            <div class="etape-texte">
+                <h4>Choisis ta SGI</h4>
+                <p>Repère la SGI la plus proche de chez toi sur la liste officielle de la BRVM.</p>
+            </div>
+        </div>
+        
+        <div class="etape">
+            <div class="etape-num">2</div>
+            <div class="etape-texte">
+                <h4>Rencontre en agence</h4>
+                <p>Rends-toi sur place avec tes documents. Un conseiller te reçoit gratuitement.</p>
+            </div>
+        </div>
+        
+        <div class="etape">
+            <div class="etape-num">3</div>
+            <div class="etape-texte">
+                <h4>Ouvre ton compte-titres</h4>
+                <p>Le conseiller crée ton compte personnel. Tu reçois un numéro identifiant.</p>
+            </div>
+        </div>
+        
+        <div class="etape">
+            <div class="etape-num">4</div>
+            <div class="etape-texte">
+                <h4>Définis ton budget</h4>
+                <p>Commence petit. Tu peux acheter une seule action pour commencer, c'est suffisant.</p>
+            </div>
+        </div>
+        
+        <div class="etape">
+            <div class="etape-num">5</div>
+            <div class="etape-texte">
+                <h4>Passe tes premiers ordres</h4>
+                <p>Indique au conseiller quelles actions tu veux acheter. Il s'occupe de la transaction pour toi.</p>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>De cette devise :</label>
-            <select id="deviseDe">
-                <option value="XOF">🇨🇫 Franc CFA (XOF)</option>
-                <option value="NGN">🇳🇬 Naira Nigérian (NGN)</option>
-                <option value="USD">🇺🇸 Dollar US (USD)</option>
-                <option value="EUR">🇪🇺 Euro (EUR)</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Vers cette devise :</label>
-            <select id="deviseVers">
-                <option value="NGN">🇳🇬 Naira Nigérian (NGN)</option>
-                <option value="XOF">🇨🇫 Franc CFA (XOF)</option>
-                <option value="USD">🇺🇸 Dollar US (USD)</option>
-                <option value="EUR">🇪🇺 Euro (EUR)</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Montant à convertir :</label>
-            <input type="number" id="montant" placeholder="Ex: 10000" min="0" step="100">
-        </div>
-
-        <button class="btn-convertir" onclick="faireConversion()">🔄 Convertir</button>
-
-        <div class="resultat" id="blocResultat">
-            <p class="montant-converti" id="texteResultat"></p>
-            <p class="info-taux">Taux indicatif — Vérifiez le taux du marché du jour</p>
+        <div class="inscrire-box" style="margin-top:20px;">
+            <p style="font-weight:bold; margin-bottom:10px;">👉 Trouve la SGI près de chez toi :</p>
+            <button class="btn btn-externe" onclick="window.open('https://www.brvm.org/fr/les-sgi-agrees', '_blank')">🔗 Voir la liste complète des SGI</button>
         </div>
     </div>
 
-    <div class="footer">
-        TCHINJI — Échange de Devises © 2026<br>
-        Disponible à Maradi & Niamey
+    <div class="card">
+        <h3 style="color:#444;">📊 Option 2 : Plateforme de Trading — Exness</h3>
+        
+        <div class="avertissement-rouge">
+            ⚠️ <strong>Important à lire :</strong> Exness est une plateforme internationale de trading en ligne. Ce n'est PAS une SGI de la BRVM. Tu y échangeras des devises, matières premières et indices, PAS des actions des entreprises africaines. Le risque de perte est plus élevé.
+        </div>
+
+        <h4>📌 Comment s'inscrire sur Exness :</h4>
+        
+        <div class="etape">
+            <div class="etape-num">1</div>
+            <div class="etape-texte">
+                <h4>Va sur le site officiel</h4>
+                <p>Rends-toi sur <strong>exness.com</strong> — Vérifie toujours l'adresse pour éviter les faux sites.</p>
+            </div>
+        </div>
+        
+        <div class="etape">
+            <div class="etape-num">2</div>
+            <div class="etape-texte">
+                <h4>Crée ton compte</h4>
+                <p>Remplis ton nom, ton email et ton numéro de téléphone. Crée un mot de passe sécurisé.</p>
+            </div>
+        </div>
+        
+        <div class="etape">
+            <div class="etape-num">3</div>
+            <div class="etape-texte">
+                <h4>Vérifie ton identité</h4>
+                <p>Téléverse une photo de ta pièce d'identité et un justificatif de domicile. C'est obligatoire pour pouvoir retirer tes gains.</p>
+            </div>
+        </div>
+        
+        <div class="etape">
+            <div class="etape-num">4</div>
+            <div class="etape-texte">
+                <h4>Commence par le compte démo ⭐</h4>
+                <p>Exness propose un compte démo GRATUIT avec de l'argent virtuel. <strong>Utilise-le d'abord pendant plusieurs semaines</strong> pour comprendre comment ça marche, SANS risquer ton argent.</p>
+            </div>
+        </div>
+        
+        <div class="etape">
+            <div class="etape-num">5</div>
+            <div class="etape-texte">
+                <h4>Seulement ensuite : Compte réel</h4>
+                <p>Quand tu es prêt, tu peux déposer de l'argent. Commence avec une petite somme que tu peux perdre sans problème.</p>
+            </div>
+        </div>
+
+        <div class="avertissement">
+            ⚠️ <strong>Les règles d'or si tu choisis Exness :</strong><br>
+            • Commence TOUJOURS par le compte démo<br>
+            • Ne dépose JAMAIS de l'argent dont tu as besoin<br>
+            • Ne crois pas aux promesses de revenus garantis<br>
+            • Lis bien leurs conditions générales
+        </div>
+
+        <button class="btn btn-exness" onclick="window.open('https://www.exness.com', '_blank')">🔗 Aller sur exness.com</button>
     </div>
 
-    <script>
-        const TAUX = {
-            XOF: { NGN: 1.55, USD: 0.0016, EUR: 0.0015 },
-            NGN: { XOF: 0.65, USD: 0.0010, EUR: 0.00096 },
-            USD: { XOF: 620, NGN: 1550, EUR: 0.94 },
-            EUR: { XOF: 660, NGN: 1650, USD: 1.07 }
-        };
+    <div class="card">
+        <h3 style="text-align:center; margin-bottom:15px;">🤔 Quelle option choisir ?</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Critère</th>
+                    <th>🏛️ SGI / BRVM</th>
+                    <th>📊 Exness</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ce que tu achètes</td>
+                    <td>Actions d'entreprises africaines</td>
+                    <td>Devises, Or, Pétrole, Indices</td>
+                </tr>
+                <tr>
+                    <td>Risque</td>
+                    <td style="color:var(--vert);">Modéré</td>
+                    <td style="color:var(--rouge);">Élevé</td>
+                </tr>
+                <tr>
+                    <td>Durée recommandée</td>
+                    <td>Long terme (années)</td>
+                    <td>Court terme (jours/semaines)</td>
+                </tr>
+                <tr>
+                    <td>Pour qui ?</td>
+                    <td>✅ Débutants</td>
+                    <td>✅ Avec expérience</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
 
-        function faireConversion() {
-            const deviseDe = document.getElementById('deviseDe').value;
-            const deviseVers = document.getElementById('deviseVers').value;
-            const montant = parseFloat(document.getElementById('montant').value);
-            const blocResultat = document.getElementById('blocResultat');
-            const texteResultat = document.getElementById('texteResultat');
+<section id="lecture">
+    <h2 data-fr="📖 Lire et Apprendre" data-ha="📖 Karatu da Koyo" data-en="📖 Read and Learn">📖 Lire et Apprendre</h2>
+    <p style="margin-bottom:20px;" data-fr="Clique sur un chapitre pour l'ouvrir. Lis à ton rythme." data-ha="Danna kan babi don buɗewa. Ka karanta a hankali." data-en="Click a chapter to open. Read at your own pace.">Clique sur un chapitre pour l'ouvrir. Lis à ton rythme.</p>
 
-            if (!montant || montant <= 0) {
-                alert('⚠️ Veuillez entrer un montant valide, exemple : 5000');
-                return;
-            }
-
-            let resultat;
-            if (deviseDe === deviseVers) {
-                resultat = montant;
-            } else {
-                resultat = montant * TAUX[deviseDe][deviseVers];
-            }
-
-            texteResultat.innerHTML = montant.toLocaleString('fr-FR') + ' ' + deviseDe + 
-                '<br>=<br>' + resultat.toLocaleString('fr-FR', {maximumFractionDigits: 2}) + ' ' + deviseVers;
+    <div class="card chapitre" id="ch1">
+        <h4 onclick="basculerChapitre('ch1-contenu')">📕 Chapitre 1 : Qu'est-ce qu'investir ? 👇</h4>
+        <div id="ch1-contenu" class="contenu-lecture">
+            <p><strong data-fr="Investir, c'est quoi ?" data-ha="Saka hannun jari — menene hakan ?" data-en="What is investing?">Investir, c'est quoi ?</strong><br><br>
+            <span data-fr="Investir, c'est placer son argent dans un projet ou une entreprise, dans le but de le faire fructifier avec le temps. Ce n'est pas un jeu, ce n'est pas du hasard." data-ha="Saka hannun jari — sanya kuɗi a cikin aiki ko kamfani domin ya ƙaru. Ba wasa ba ne." data-en="Investing means putting money into a project or business to grow wealth over time. It's not a game.">Investir, c'est placer son argent dans un projet ou une entreprise, dans le but de le faire fructifier avec le temps. Ce n'est pas un jeu, ce n'est pas du hasard.</span><br><br>
             
-            blocResultat.classList.add('visible');
-        }
-    </script>
-</body>
+            <strong>💰 Pourquoi investir ?</strong><br>
+            • Protéger son argent contre l'inflation<br>
+            • Préparer l'avenir<br>
+            • Aider des entreprises africaines à grandir<br><br>
+            
+            <strong data-fr="⚠️ La règle d'or :" data-ha="⚠️ Dokar zinariya :" data-en="⚠️ Golden rule:">⚠️ La règle d'or :</strong><br>
+            <em data-fr="N'investissez JAMAIS l'argent dont vous avez besoin pour vivre." data-ha="Kada ka taɓa saka kuɗin rayuwa." data-en="NEVER invest money you need to live.">N'investissez JAMAIS l'argent dont vous avez besoin pour vivre.</em></p>
+            
+            <div class="quiz-box">
+                <p><strong data-fr="✍️ Petit test :" data-ha="✍️ Gwaji :" data-en="✍️ Quick quiz:">✍️ Petit test :</strong> Investir c'est... ?</p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="reponseQuiz(this, false)">A. Gagner de l'argent rapidement</div>
+                    <div class="quiz-option" onclick="reponseQuiz(this, true)">B. Faire fructifier son argent durablement ✅</div>
+                    <div class="quiz-option" onclick="reponseQuiz(this, false)">C. Un jeu de hasard</div>
+                </div>
+                <p class="quiz-feedback" id="quiz-feedback1"></p>
+                <div id="inscrire-apres-quiz1" class="inscrire-box hidden">
+                    <p style="font-weight:bold; margin-bottom:8px;">✅ Tu as terminé cette leçon !</p>
+                    <p style="font-size:14px; margin-bottom:10px;">Prêt à passer à l'action ? Découvre tes options :</p>
+                    <button class="btn" onclick="afficherSection('inscription')">📝 Comment s'inscrire ?</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card chapitre" id="ch2">
+        <h4 onclick="basculerChapitre('ch2-contenu')">📘 Chapitre 2 : Comprendre la Bourse 👇</h4>
+        <div id="ch2-contenu" class="contenu-lecture">
+            <p><strong data-fr="🏛️ Qu'est-ce que la Bourse ?" data-ha="🏛️ Menene Kasuwar Hannun Jari ?" data-en="🏛️ What is the Stock Market?">🏛️ Qu'est-ce que la Bourse ?</strong><br><br>
+            <span data-fr="C'est un marché où des entreprises vendent de petites parts d'elles-mêmes. Ces parts s'appellent des actions. En acheter = devenir copropriétaire de l'entreprise." data-ha="Kasuwa inda kamfanoni ke sayar da ɓangarensu. Ana kiransa hannun jari. Siyan = zama mai rabo a kamfani." data-en="A marketplace where companies sell small pieces of themselves. Buying a share = becoming part-owner.">C'est un marché où des entreprises vendent de petites parts d'elles-mêmes. Ces parts s'appellent des actions. En acheter = devenir copropriétaire de l'entreprise.</span></p>
+            
+            <div class="quiz-box">
+                <p><strong data-fr="✍️ Petit test :" data-ha="✍️ Gwaji :" data-en="✍️ Quick quiz:">✍️ Petit test :</strong> Une action c'est... ?</p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="reponseQuiz2(this, false)">A. De l'argent prêté à une entreprise</div>
+                    <div class="quiz-option" onclick="reponseQuiz2(this, true)">B. Une part de propriété dans une entreprise ✅</div>
+                    <div class="quiz-option" onclick="reponseQuiz2(this, false)">C. Un produit à revendre le lendemain</div>
+                </div>
+                <p class="quiz-feedback" id="quiz-feedback2"></p>
+                <div id="inscrire-apres-quiz2" class="inscrire-box hidden">
+                    <p style="font-weight:bold; margin-bottom:8px;">🎉 Tu maîtrises les bases !</p>
+                    <p style="font-size:14px; margin-bottom:10px;">Passe de la théorie à la pratique :</p>
+                    <button class="btn" onclick="afficherSection('inscription')">📝 Voir comment s'inscrire</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card chapitre" id="ch3">
+        <h4 onclick="basculerChapitre('ch3-contenu')">📙 Chapitre 3 : La BRVM — Notre Bourse régionale 👇</h4>
+        <div id="ch3-contenu" class="contenu-lecture">
+            <p><strong data-fr="🌍 Qu'est-ce que la BRVM ?" data-ha="🌍 Menene BRVM ?" data-en="🌍 What is BRVM?">🌍 Qu'est-ce que la BRVM ?</strong><br><br>
+            <span data-fr="La BRVM dessert 8 pays de l'UEMOA. Pour investir, il faut passer par une SGI agréée." data-ha="BRVM tana aiki a kasashe 8. Domin saka hannun jari, dole ne ka bi ta SGI." data-en="BRVM serves 8 countries. To invest, you must go through an authorized SGI.">La BRVM dessert 8 pays de l'UEMOA. Pour investir, il faut passer par une SGI agréée.</span></p>
+            <button class="btn" onclick="afficherSection('inscription')" style="margin-top:15px;">📝 Voir la liste des SGI</button>
+        </div>
+    </div>
+
+    <div class="card chapitre" id="ch4">
+        <h4 onclick="basculerChapitre('ch4-contenu')">📔 Chapitre 4 : Trading — Comprendre les risques 👇</h4>
+        <div id="ch4-contenu" class="contenu-lecture">
+            <p><strong data-fr="💹 Investir ou Trader ?" data-ha="💹 Saka hannun jari ko Kasuwanci ?" data-en="💹 Invest vs Trade?">💹 Investir ou Trader ?</strong><br><br>
+            
+            <strong>Investissement :</strong><br>
+            • Sur le long terme (mois, années)<br>
+            • Parie sur la croissance d'une entreprise<br>
+            • Moins risqué, plus stable<br><br>
+            
+            <strong>Trading (Exness, etc.) :</strong><br>
+            • Sur le court terme (minutes, heures, jours)<br>
+            • Joue sur les variations rapides de prix<br>
+            • Très risqué, demande beaucoup d'expérience<br><br>
+            
+            <div class="avertissement-rouge">
+                ⚠️ <strong>À retenir :</strong> Beaucoup de personnes perdent de l'argent en pensant que le trading est une solution rapide pour devenir riche. Ce n'est PAS vrai. Commence par investir, apprends, et utilise TOUJOURS un compte démo avant de mettre de l'argent réel.
+            </div>
+            <button class="btn btn-exness" onclick="afficherSection('inscription')" style="margin-top:15px;">📊 En savoir plus sur Exness</button>
+        </div>
+    </div>
+</section>
+
+<section id="demo">
+    <h2 data-fr="🎮 Mode Démo — S'entraîner sans risque" data-ha="🎮 Koyarwa — Babu haɗari" data-en="🎮 Practice Mode — Risk-free training">🎮 Mode Démo — S'entraîner sans risque</h2>
+    
+    <div class="demo-compte">
+        <p data-fr="Solde virtuel de départ" data-ha="Tushen kuɗin kwaikwayo" data-en="Starting virtual balance">Solde virtuel de départ</p>
+        <div class="demo-solde" id="solde-demo">1 000 000 FCFA</div>
+        <p style="font-size:13px; opacity:0.8;">⚠️ Ceci n'est PAS de l'argent réel — pour apprendre seulement</p>
+    </div>
+
+    <h3 data-fr="📊 Actions disponibles à l'achat" data-ha="📊 Hannun jari da ake iya saya" data-en="📊 Available shares to buy">📊 Actions disponibles à l'achat</h3>
+    
+    <div class="demo-actions" id="liste-actions">
+        <div class="action-card">
+            <div class="nom">SONATEL</div>
+            <div class="prix">23 500 F</div>
+            <div class="var-plus">+0,8%</div>
+            <button class="btn btn-sm" onclick="acheterAction('SONATEL', 23500)">Acheter</button>
+        </div>
+        <div class="action-card">
+            <div class="nom">BOA CI</div>
+            <div class="prix">6 150 F</div>
+            <div class="var-plus">+0,5%</div>
+            <button class="btn btn-sm" onclick="acheterAction('BOA CI', 6150)">Acheter</button>
+        </div>
+        <div class="action-card">
+            <div class="nom">ORABANK</div>
+            <div class="prix">2 890 F</div>
+            <div class="var-moins">-0,3%</div>
+            <button class="btn btn-sm" onclick="acheterAction('ORABANK', 2890)">Acheter</button>
+        </div>
+        <div class="action-card">
+            <div class="nom">SOGB CI</div>
+            <div class="prix">10 800 F</div>
+            <div class="var-plus">+0,4%</div>
+            <button class="btn btn-sm" onclick="acheterAction('SOGB CI', 10800)">Acheter</button>
+        </div>
+    </div>
+
+    <h3 style="margin-top:25px;" data-fr="💼 Ton portefeuille virtuel" data-ha="💼 Babban asusun ka" data-en="💼 Your virtual portfolio">💼 Ton portefeuille virtuel</h3>
+    <div class="card">
+        <div class="portfolio-list" id="portefeuille">
+            <p style="color:#888; text-align:center; padding:15px;">Ton portefeuille est vide. Commence par acheter une action !</p>
+        </div>
+    </div>
+
+    <div class="inscrire-box" style="margin-top:25px;">
+        <h3 style="color:var(--bleu); margin-bottom:10px;">🎯 Passer au réel ?</h3>
+        <p style="font-size:14px; margin-bottom:12px;">Tu as terminé l'entraînement. Découvre tes options :</p>
+        <button class="btn" onclick="afficherSection('inscription')">📝 Comment s'inscrire ?</button>
+    </div>
+
+    <button class="btn btn-orange" onclick="reinitialiserDemo()" style="margin-top:15px;">🔄 Recommencer la démo</button>
+</section>
+
+<section id="devises">
+    <h2 data-fr="💱 Échange de Devises" data-ha="💱 Musanya Kuɗi" data-en="💱 Currency Exchange">💱 Échange de Devises</h2>
+    
+    <div class="card">
+        <h3 data-fr="Convertisseur" data-ha="Mai Musanya" data-en="Converter">Convertisseur</h3>
+        <input type="number" id="montant" placeholder="Montant" value="10000">
+        <select id="devisesDepart">
+            <option value="XOF" selected>FCFA (XOF)</option>
+            <option value="USD">Dollar US ($)</option>
+            <option value="EUR">Euro (€)</option>
+            <option value="NGN">Naira (₦)</option>
+        </select>
+        <span style="text-align:center;display:block;margin:8px 0;">↓ vers ↓</span>
+        <select id="devisesArrivee">
+            <option value="USD">Dollar US ($)</option>
+            <option value="XOF" selected>FCFA (XOF)</option>
+            <option value="EUR">Euro (€)</option>
+            <option value="NGN">Naira (₦)</option>
+        </select>
+        <button class="btn" onclick="convertir()">Calculer</button>
+        <div class="resultat" id="resultat">—</div>
+    </div>
+</section>
+
+</div>
+
+<script>
+let langueActuelle = 'fr';
+let soldeDemo = 1000000;
+let portefeuille = [];
+
+function choisirLangue(lang) {
+    langueActuelle = lang;
+    localStorage.setItem('tchinji_lang', lang);
+    document.getElementById('lang-screen').classList.add('hidden');
+    document.getElementById('main-content').classList.remove('hidden');
+    appliquerLangue(lang);
+}
+
+function appliquerLangue(lang) {
+    document.querySelectorAll('[data-fr]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+    });
+}
+
+function retourLangue() {
+    document.getElementById('lang-screen').classList.remove('hidden');
+    document.getElementById('main-content').classList.add('hidden');
+}
+
+function afficherSection(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+function basculerChapitre(id) {
+    document.getElementById(id).classList.toggle('visible');
+}
+
+function reponseQuiz(el, bonne) {
+    const options = el.parentElement.querySelectorAll('.quiz-option');
+    options.forEach(opt => opt.style.pointerEvents = 'none');
+    el.classList.add(bonne ? 'bonne-reponse' : 'mauvaise-reponse');
+    const feedback = document.getElementById('quiz-feedback1');
+    feedback.textContent = bonne ? '✅ Bonne réponse !' : '❌ Ce n\'est pas la bonne réponse. Relis le chapitre.';
+    feedback.style.color = bonne ? '#008C45' : '#DC2626';
+    if (bonne) document.getElementById('inscrire-apres-quiz1').classList.remove('hidden');
+}
+
+function reponseQuiz2(el, bonne) {
+    const options = el.parentElement.querySelectorAll('.quiz-option');
+    options.forEach(opt => opt.style.pointerEvents = 'none');
+    el.classList.add(bonne ? 'bonne-reponse' : 'mauvaise-reponse');
+    const feedback = document.getElementById('quiz-feedback2');
+    feedback.textContent = bonne ? '✅ Parfait ! Tu as compris !' : '❌ Pas encore juste. Relis attentivement.';
+    feedback.style.color = bonne ? '#008C45' : '#DC2626';
+    if (bonne) document.getElementById('inscrire-apres-quiz2').classList.remove('hidden');
+}
+
+function acheterAction(nom, prix) {
+    if (soldeDemo >= prix) {
+        soldeDemo -= prix;
+        portefeuille.push({ nom, prix });
+        mettreAJourDemo();
+    } else {
+        alert('Solde insuffisant. Continue à apprendre !');
+    }
+}
+
+function mettreAJourDemo() {
+    document.getElementById('solde-demo').textContent = new Intl.NumberFormat('fr-FR').format(soldeDemo) + ' FCFA';
+    const conteneur = document.getElementById('portefeuille');
+    if (portefeuille.length === 0) {
+        conteneur.innerHTML = '<p style="color:#888; text-align:center; padding:15px;">Ton portefeuille est vide. Commence par acheter une action !</p>';
+    } else {
+        conteneur.innerHTML = portefeuille.map(item => `
+            <div class="portfolio-item">
+                <span>${item.nom}</span>
+                <span>${item.prix.toLocaleString()} F</span>
+            </div>
+        `).join('');
+    }
+}
+
+function reinitialiserDemo() {
+    if (confirm('Voulez-vous vraiment recommencer à zéro ?')) {
+        soldeDemo = 1000000;
+        portefeuille = [];
+        mettreAJourDemo();
+    }
+}
+
+function convertir() {
+    const montant = parseFloat(document.getElementById('montant').value);
+    const depart = document.getElementById('devisesDepart').value;
+    const arrivee = document.getElementById('devisesArrivee').value;
+    
+    const taux = {
+        'XOF-USD': 1/610, 'USD-XOF': 610,
+        'XOF-EUR': 1/668, 'EUR-XOF': 668,
+        'USD-NGN': 1565, 'NGN-USD': 1/1565,
+        'EUR-USD': 1.09, 'USD-EUR': 1/1.09
+    };
+    
+    const cle = depart + '-' + arrivee;
+    const resultat = montant * (taux[cle] || 1);
+    document.getElementById('resultat').textContent = resultat.toFixed(2);
+}
+
+const sauvegardee = localStorage.getItem('tchinji_lang');
+if (sauvegardee) choisirLangue(sauvegardee);
+</script>
+
 </html>
