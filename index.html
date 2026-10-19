@@ -500,6 +500,17 @@ function convertir() {
     
     const taux = {
         'XOF': { 'XOF': 1, 'USD': 0.00163, 'EUR': 0.00150, 'NGN': 2.55 },
+        'USD': { 'XOF': 610, '        'XOF': { 'XOF': 1, 'USD': 0.00163, 'EUR': 0.00150, 'NGN': 2.55 },
         'USD': { 'XOF': 610, 'USD': 1, 'EUR': 0.92, 'NGN': 1550 },
         'EUR': { 'XOF': 668, 'USD': 1.09, 'EUR': 1, 'NGN': 1685 },
-        'NGN': { 'XOF
+        'NGN': { 'XOF': 0.39, 'USD': 0.000645, 'EUR': 0.000593, 'NGN': 1 }
+    };
+    
+    const resultat = (montant / taux[depart][depart]) * taux[depart][arrivee];
+    document.getElementById('resultat').textContent = resultat.toFixed(2) + ' ' + arrivee;
+}
+</script>
+
+</body>
+</html>
+
