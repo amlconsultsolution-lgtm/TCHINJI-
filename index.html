@@ -32,17 +32,19 @@
             font-size: 20px; font-weight: bold; color: var(--vert); 
             cursor: pointer; display: block;
         }
+        .lang-btn:active { background: #e5e7eb; }
 
         #main-content { display: none; }
         #main-content.show { display: block; }
 
         header { background: linear-gradient(135deg, var(--vert), var(--vert-fonce)); color: white; padding: 25px 20px; text-align: center; }
         header h1 { font-size: 28px; margin-bottom: 5px; }
+        header p { font-size: 16px; opacity: 0.9; }
 
         nav { background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
         nav ul { display: flex; overflow-x: auto; list-style: none; padding: 0; }
         nav li { flex-shrink: 0; }
-        nav a { display: block; padding: 12px 10px; text-decoration: none; color: #333; font-size: 14px; }
+        nav a { display: block; padding: 12px 10px; text-decoration: none; color: #333; font-size: 14px; white-space: nowrap; }
         nav a.active { border-bottom: 3px solid var(--vert); color: var(--vert); font-weight: bold; }
 
         section { padding: 20px; display: none; }
@@ -72,34 +74,39 @@
 </head>
 <body>
 
+<!-- Écran de choix de langue -->
 <div id="lang-screen">
     <h1>🌍 TCHINJI</h1>
-    <p>Choisis ta langue</p>
-    <button class="lang-btn" onclick="choisirLangue()">🇫🇷 Français</button>
+    <p id="lang-message">Choisis ta langue pour commencer</p>
+    <button class="lang-btn" onclick="choisirLangue('fr')">🇫🇷 Français</button>
+    <button class="lang-btn" onclick="choisirLangue('ha')">🇳🇭 Haoussa</button>
+    <button class="lang-btn" onclick="choisirLangue('en')">🇬🇧 English</button>
 </div>
 
+<!-- Contenu principal -->
 <div id="main-content">
 
 <header>
     <h1>🌍 TCHINJI</h1>
-    <p>Échanger • Investir • Envoyer en toute confiance</p>
+    <p id="header-slogan">Échanger • Investir • Envoyer en toute confiance</p>
 </header>
 
 <nav>
     <ul>
-        <li><a href="#accueil" class="active" onclick="afficherSection('accueil'); return false;">Accueil</a></li>
-        <li><a href="#devises" onclick="afficherSection('devises'); return false;">💱 Devises</a></li>
-        <li><a href="#trading" onclick="afficherSection('trading'); return false;">📈 Trading</a></li>
-        <li><a href="#investir" onclick="afficherSection('investir'); return false;">💰 Investir</a></li>
-        <li><a href="#prvm" onclick="afficherSection('prvm'); return false;">🛡️ PRVM</a></li>
-        <li><a href="#contact" onclick="afficherSection('contact'); return false;">📞 Contact</a></li>
+        <li><a href="#accueil" class="active" onclick="afficherSection('accueil'); return false;" id="nav-accueil">Accueil</a></li>
+        <li><a href="#apropos" onclick="afficherSection('apropos'); return false;" id="nav-apropos">À Propos</a></li>
+        <li><a href="#devises" onclick="afficherSection('devises'); return false;" id="nav-devises">💱 Devises</a></li>
+        <li><a href="#trading" onclick="afficherSection('trading'); return false;" id="nav-trading">📈 Trading</a></li>
+        <li><a href="#investir" onclick="afficherSection('investir'); return false;" id="nav-investir">💰 Investir</a></li>
+        <li><a href="#prvm" onclick="afficherSection('prvm'); return false;" id="nav-prvm">🛡️ PRVM</a></li>
+        <li><a href="#contact" onclick="afficherSection('contact'); return false;" id="nav-contact">📞 Contact</a></li>
     </ul>
 </nav>
 
 <section id="accueil" class="active">
-    <h2>Bienvenue sur TCHINJI 👋</h2>
+    <h2 id="accueil-title">Bienvenue sur TCHINJI 👋</h2>
     <div class="succes-box">
-        <p>✅ Votre plateforme complète : Change de devises, Envoi d'argent, Trading, Investissement et PRVM.</p>
+        <p id="accueil-intro">✅ Votre plateforme complète : Change de devises, Envoi d'argent, Trading, Investissement et PRVM — Protection de la Valeur Monétaire.</p>
     </div>
     <div class="grid-2">
         <button class="btn" onclick="afficherSection('devises')">💱 Devises</button>
@@ -107,12 +114,40 @@
         <button class="btn btn-orange" onclick="afficherSection('investir')">💰 Investir</button>
         <button class="btn btn-bleu" onclick="afficherSection('prvm')">🛡️ PRVM</button>
     </div>
+    <div class="card" style="margin-top:20px;">
+        <h3 id="accueil-aide">💬 Besoin d'aide ?</h3>
+        <p id="accueil-aide-text">Je suis là pour vous accompagner dans vos démarches. N'hésitez pas à me contacter directement sur WhatsApp :</p>
+        <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 Me contacter sur WhatsApp</a>
+    </div>
+</section>
+
+<section id="apropos">
+    <h2 id="apropos-title">À Propos de TCHINJI</h2>
+    <div class="card">
+        <h3 id="apropos-qui">🌍 Qui sommes-nous ?</h3>
+        <p id="apropos-qui-text"><strong>TCHINJI</strong> est une plateforme de proximité créée pour répondre aux besoins réels des personnes qui échangent de l'argent, qui voyagent ou qui font du commerce entre le Niger, les pays voisins et la diaspora.</p>
+        <p id="apropos-qui-text2" style="margin-top:10px;">Nous ne sommes pas une banque et nous ne détenons pas l'argent de nos clients. Notre rôle est de <strong>vous informer, vous guider et vous mettre en relation</strong> avec les structures agréées pour vos opérations financières en toute sécurité.</p>
+    </div>
+    <div class="card">
+        <h3 id="apropos-mission">🎯 Notre mission</h3>
+        <p id="apropos-mission-text">Rendre l'information financière accessible à tous, permettre à chacun de connaître les vrais taux de change, de comprendre comment investir légalement, et de protéger la valeur de son argent dans un contexte économique difficile.</p>
+    </div>
+    <div class="card">
+        <h3 id="apropos-principes">💡 Nos principes</h3>
+        <p>✅ <strong id="principes-t1">Transparence :</strong> Les taux sont visibles et clairs</p>
+        <p>✅ <strong id="principes-t2">Sécurité :</strong> Nous vous orientons vers des structures agréées uniquement</p>
+        <p>✅ <strong id="principes-t3">Proximité :</strong> Une réponse proche de chez vous, au Niger</p>
+        <p>✅ <strong id="principes-t4">Éducation :</strong> Apprendre avant d'investir ou d'échanger</p>
+    </div>
+    <div class="avert-box">
+        <p id="apropos-avert">⚠️ TCHINJI n'est pas un établissement bancaire et ne détient pas d'argent pour le compte de ses clients. Toutes les opérations financières se font directement entre vous et la structure agréée de votre choix.</p>
+    </div>
 </section>
 
 <section id="devises">
-    <h2>💱 Convertisseur de Devises</h2>
+    <h2 id="devises-title">💱 Convertisseur de Devises</h2>
     <div class="card">
-        <h3>Calculez votre montant</h3>
+        <h3 id="devises-calcule">Calculez votre montant</h3>
         <input type="number" id="montant" placeholder="Montant" value="10000">
         <select id="devisesDepart">
             <option value="XOF" selected>FCFA (XOF)</option>
@@ -127,132 +162,151 @@
             <option value="EUR">Euro (€)</option>
             <option value="NGN">Naira (₦)</option>
         </select>
-        <button class="btn" onclick="convertir()">Calculer</button>
+        <button class="btn" onclick="convertir()" id="btn-calculer">Calculer</button>
         <div class="resultat" id="resultat">—</div>
     </div>
     <div class="info-box">
-        <p>💡 Ces taux sont indicatifs. Pour un échange réel, contactez-moi directement sur WhatsApp :</p>
+        <p id="devises-info">💡 Ces taux sont indicatifs et peuvent varier selon les lieux et les moments. Pour un échange réel et sécurisé, contactez-moi directement :</p>
         <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 Échanger sur WhatsApp</a>
     </div>
 </section>
 
 <section id="trading">
-    <h2>📈 Trading — Marchés & Formations</h2>
+    <h2 id="trading-title">📈 Trading — Marchés & Formations</h2>
     <div class="avert-box">
-        <p>⚠️ Important : TCHINJI ne demande JAMAIS d'argent pour faire du trading. Le trading comporte des risques importants. Ne tradez jamais que ce que vous pouvez perdre.</p>
+        <p id="trading-avert">⚠️ Important : TCHINJI ne demande JAMAIS d'argent pour faire du trading. Le trading comporte des risques importants. Ne tradez jamais que ce que vous pouvez vous permettre de perdre.</p>
     </div>
     <div class="card">
-        <h3>📊 Tendances du Marché</h3>
-        <p>Consultez gratuitement l'évolution des devises, de l'or et des marchés en temps réel pour prendre des décisions éclairées :</p>
+        <h3 id="trading-tendances">📊 Tendances du Marché</h3>
+        <p id="trading-tendances-text">Consultez gratuitement l'évolution des devises, de l'or et des marchés financiers en temps réel pour prendre des décisions éclairées :</p>
         <a href="https://www.investing.com" target="_blank" class="btn btn-bleu">📊 Voir les tendances du marché</a>
-        <p class="small-note">Redirection vers Investing.com</p>
+        <p class="small-note" id="trading-tendances-note">Redirection vers Investing.com — site externe indépendant</p>
     </div>
     <div class="card">
-        <h3>🎓 Mode Démo — Apprendre sans risque</h3>
-        <p>Commencez par le compte démo pour vous former sans utiliser d'argent réel :</p>
+        <h3 id="trading-demo">🎓 Apprendre sans risque — Mode Démo</h3>
+        <p id="trading-demo-text">Avant d'investir votre argent, formez-vous gratuitement avec un compte démo. C'est de l'argent virtuel pour apprendre sans risque :</p>
         <a href="https://www.exness.com/fr/demo-account/" target="_blank" class="btn btn-exness">📖 Ouvrir un compte démo gratuit</a>
-        <p class="small-note">Pratiquez sans déposer d'argent</p>
+        <p class="small-note" id="trading-demo-note">Redirection vers Exness — l'inscription se fait directement sur leur plateforme</p>
     </div>
     <div class="card">
-        <h3>🚀 Accès à la plateforme</h3>
-        <p>Une fois prêt, accédez à la plateforme :</p>
+        <h3 id="trading-plateforme">🚀 Accès à la plateforme de trading</h3>
+        <p id="trading-plateforme-text">Lorsque vous êtes prêt et que vous maîtrisez le fonctionnement, vous pouvez accéder à la plateforme régulée :</p>
         <a href="https://www.exness.com/fr" target="_blank" class="btn btn-exness">🔗 Accéder à Exness</a>
-        <p class="small-note">⚠️ À lire les conditions générales</p>
+        <p class="small-note" id="trading-plateforme-note">⚠️ Prenez connaissance des conditions générales et tradez de manière responsable</p>
     </div>
 </section>
 
 <section id="investir">
-    <h2>💰 Investir — Faire fructifier son argent</h2>
+    <h2 id="investir-title">💰 Investir — Faire fructifier son argent</h2>
     <div class="succes-box">
-        <p>✅ Investir, c'est placer son argent dans des projets solides sur le long terme. Au Niger, passez par une SGI agréée pour être en règle et protégé.</p>
+        <p id="investir-intro">✅ Investir, c'est placer son argent dans des projets solides sur le long terme. Au Niger, vous pouvez investir légalement et en toute sécurité en passant par une SGI agréée.</p>
     </div>
     <div class="card">
-        <h3>🤝 Deux options pour vous accompagner</h3>
-        <p><strong>Option 1 — Être guidé par moi :</strong> Je vous explique la démarche et vous oriente. Je ne gère pas votre argent — je suis votre conseiller de proximité.</p>
+        <h3 id="investir-options">🤝 Comment ça se passe ? Deux options pour vous :</h3>
+        
+        <p id="investir-op1"><strong>Option 1 — Être accompagné par moi :</strong> Je vous explique la démarche, je réponds à vos questions, et je vous oriente vers la bonne structure. Je ne gère pas votre argent — je suis votre conseiller de proximité.</p>
         <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 Me contacter pour être guidé</a>
-        <p style="margin-top:20px;"><strong>Option 2 — Aller directement à la SGI :</strong> Voici quelques SGI agréées à Niamey (à compléter) :</p>
+        
+        <p style="margin-top:25px;" id="investir-op2"><strong>Option 2 — Aller directement auprès d'une SGI :</strong> Vous pouvez également contacter directement une SGI agréée pour ouvrir votre compte d'investisseur. Voici quelques structures connues à Niamey :</p>
     </div>
     <div class="card">
-        <h3>🏛️ SGI agréées au Niger</h3>
-        <p class="small-note">📌 Ces informations sont à titre indicatif. Vérifiez toujours auprès de l'Autorité des Marchés Financiers du Niger.</p>
+        <h3 id="investir-sgi">🏛️ SGI agréées au Niger</h3>
+        <p class="small-note" id="investir-sgi-note">📌 Ces informations sont données à titre indicatif et seront complétées prochainement avec les coordonnées officielles. Vérifiez toujours que la SGI est bien agréée par l'Autorité des Marchés Financiers du Niger avant tout engagement.</p>
+        
         <div class="sgi-card">
-            <p><strong>SGI — À compléter prochainement</strong><br>📍 Niamey — Adresse à venir<br>📞 Téléphone à venir</p>
+            <p><strong>SGI — À compléter prochainement</strong><br>
+            📍 Niamey — Adresse à venir<br>
+            📞 Téléphone à venir</p>
         </div>
+        
         <div class="sgi-card">
-            <p><strong>SGI — À compléter prochainement</strong><br>📍 Niamey — Adresse à venir<br>📞 Téléphone à venir</p>
+            <p><strong>SGI — À compléter prochainement</strong><br>
+            📍 Niamey — Adresse à venir<br>
+            📞 Téléphone à venir</p>
         </div>
-        <p class="small-note" style="margin-top:15px;">ℹ️ Pour la liste officielle, consultez l'Autorité des Marchés Financiers du Niger.</p>
+        
+        <div class="sgi-card">
+            <p><strong>SGI — À compléter prochainement</strong><br>
+            📍 Niamey — Adresse à venir<br>
+            📞 Téléphone à venir</p>
+        </div>
+
+        <p class="small-note" style="margin-top:15px;" id="investir-sgi-officiel">ℹ️ Pour obtenir la liste officielle et à jour des SGI agréées, rendez-vous auprès de l'Autorité des Marchés Financiers du Niger.</p>
     </div>
     <div class="avert-box">
-        <p>⏳ Rappel important : Il n'y a pas de rendement garanti. Chaque projet a ses risques que la SGI vous explique en détail. Méfiez-vous des promesses de gains rapides.</p>
+        <p id="investir-avert">⏳ Rappel important : Il n'existe pas de rendement garanti. Chaque projet d'investissement comporte des risques que la SGI doit vous expliquer clairement lors de votre première rencontre. Méfiez-vous systématiquement des promesses de gains rapides et trop élevés.</p>
     </div>
 </section>
 
 <section id="prvm">
-    <h2>🛡️ PRVM — Protection de la Valeur Monétaire</h2>
+    <h2 id="prvm-title">🛡️ PRVM — Protection de la Valeur Monétaire</h2>
     <div class="succes-box">
-        <p style="font-size:17px; font-weight:500;">Le concept simple : Votre argent doit conserver son pouvoir d'achat, peu importe ce qui se passe autour de vous.</p>
+        <p style="font-size:17px; font-weight:500;" id="prvm-intro">Le concept simple : Votre argent doit conserver son pouvoir d'achat, peu importe ce qui se passe autour de vous.</p>
     </div>
     <div class="card">
-        <h3>❓ Pourquoi protéger sa valeur ?</h3>
-        <p>L'inflation fait monter les prix année après année. Le PRVM vous aide à préserver votre pouvoir d'achat.</p>
+        <h3 id="prvm-pourquoi">❓ De quoi s'agit-il ?</h3>
+        <p id="prvm-pourquoi-text">L'inflation fait monter les prix année après année. Ce qui coûte 10 000 FCFA aujourd'hui pourrait coûter 11 000 FCFA dans un an. Le PRVM, c'est l'idée simple de protéger la valeur de votre argent contre ces changements.</p>
     </div>
     <div class="card">
-        <h3>🔑 Les 3 piliers du PRVM</h3>
-        <p><strong>1. 📊 Suivre les tendances</strong> — Pour savoir quand convertir</p>
-        <p><strong>2. 🔄 Convertir au bon moment</strong> — Pas dans la panique</p>
-        <p><strong>3. 🏛️ Diversifier via la SGI</strong> — En toute légalité</p>
+        <h3 id="prvm-piliers">🔑 Les 3 piliers du PRVM</h3>
+        <p id="prvm-p1"><strong>📊 1. Suivre les tendances</strong> — Connaître l'évolution des devises et des prix pour prendre les bonnes décisions au bon moment.</p>
+        <p id="prvm-p2" style="margin-top:8px;"><strong>🔄 2. Convertir au bon moment</strong> — Changer progressivement, quand les taux sont favorables, pas dans la panique ou l'urgence.</p>
+        <p id="prvm-p3" style="margin-top:8px;"><strong>🏛️ 3. Diversifier légalement</strong> — Répartir vos avoirs dans différentes devises ou placements via des structures agréées, en toute sécurité et légalité.</p>
     </div>
     <div class="card">
-        <h3>📈 Suivre les taux et tendances</h3>
+        <h3 id="prvm-taux">📈 Suivre les taux en temps réel</h3>
+        <p id="prvm-taux-text">Pour savoir quand est le bon moment pour convertir, consultez régulièrement les taux de change :</p>
         <a href="https://www.investing.com/currencies/" target="_blank" class="btn btn-bleu">📊 Voir les taux et tendances</a>
     </div>
-    <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 En savoir plus sur le PRVM</a>
+    <div class="card">
+        <h3 id="prvm-question">💬 Besoin de conseils ?</h3>
+        <p id="prvm-question-text">Je suis là pour répondre à vos questions et vous expliquer simplement comment protéger la valeur de votre argent :</p>
+        <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 En savoir plus sur le PRVM</a>
+    </div>
 </section>
 
 <section id="contact">
-    <h2>📞 Me Contacter</h2>
+    <h2 id="contact-title">📞 Me Contacter</h2>
     <div class="card" style="text-align:center; padding:25px;">
         <p style="font-size:18px; font-weight:bold; color:#166534; margin-bottom:15px;">📱 WhatsApp : +227 89 21 41 67</p>
-        <p style="color:#4b5563; margin-bottom:20px;">Disponible tous les jours pour vous accompagner</p>
-        <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 Discuter maintenant</a>
+        <p style="color:#4b5563; margin-bottom:20px;" id="contact-dispo">Disponible tous les jours pour vous accompagner, répondre à vos questions et vous guider dans vos démarches.</p>
+        <a href="https://wa.me/22789214167" target="_blank" class="btn btn-whatsapp">💬 Me contacter maintenant</a>
+    </div>
+    <div class="avert-box">
+        <p id="contact-avert">⚠️ Je ne demande jamais de paiement pour simplement vous informer ou vous guider. Les échanges et investissements se font directement entre vous et la structure de votre choix.</p>
     </div>
 </section>
 
 </div>
 
 <script>
-function choisirLangue() {
-    document.getElementById('lang-screen').style.display = 'none';
-    document.getElementById('main-content').classList.add('show');
-}
-
-function afficherSection(id) {
-    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-    event.target.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function convertir() {
-    const montant = parseFloat(document.getElementById('montant').value);
-    const depart = document.getElementById('devisesDepart').value;
-    const arrivee = document.getElementById('devisesArrivee').value;
-    
-    const taux = {
-        'XOF': { 'XOF': 1, 'USD': 0.00163, 'EUR': 0.00150, 'NGN': 2.55 },
-        'USD': { 'XOF': 610, 'USD': 1, 'EUR': 0.92, 'NGN': 1550 },
-        'EUR': { 'XOF': 668, 'USD': 1.09, 'EUR': 1, 'NGN': 1680 },
-        'NGN': { 'XOF': 0.39, 'USD': 0.000645, 'EUR': 0.000595, 'NGN': 1 }
-    };
-    
-    const resultat = montant * taux[depart][arrivee];
-    const deviseSymbole = { 'XOF': 'FCFA', 'USD': '$', 'EUR': '€', 'NGN': '₦' };
-    
-    document.getElementById('resultat').textContent = resultat.toFixed(2) + ' ' + deviseSymbole[arrivee];
-}
-</script>
-
-</body>
-</html>
+const traductions = {
+    fr: {
+        'lang-message': 'Choisis ta langue pour commencer',
+        'header-slogan': 'Échanger • Investir • Envoyer en toute confiance',
+        'nav-accueil': 'Accueil',
+        'nav-apropos': 'À Propos',
+        'nav-devises': '💱 Devises',
+        'nav-trading': '📈 Trading',
+        'nav-investir': '💰 Investir',
+        'nav-prvm': '🛡️ PRVM',
+        'nav-contact': '📞 Contact',
+        'accueil-title': 'Bienvenue sur TCHINJI 👋',
+        'accueil-intro': '✅ Votre plateforme complète : Change de devises, Envoi d\'argent, Trading, Investissement et PRVM — Protection de la Valeur Monétaire.',
+        'accueil-aide': '💬 Besoin d\'aide ?',
+        'accueil-aide-text': 'Je suis là pour vous accompagner dans vos démarches. N\'hésitez pas à me contacter directement sur WhatsApp :',
+        'apropos-title': 'À Propos de TCHINJI',
+        'apropos-qui': '🌍 Qui sommes-nous ?',
+        'apropos-qui-text': '<strong>TCHINJI</strong> est une plateforme de proximité créée pour répondre aux besoins réels des personnes qui échangent de l\'argent, qui voyagent ou qui font du commerce entre le Niger, les pays voisins et la diaspora.',
+        'apropos-qui-text2': 'Nous ne sommes pas une banque et nous ne détenons pas l\'argent de nos clients. Notre rôle est de <strong>vous informer, vous guider et vous mettre en relation</strong> avec les structures agréées pour vos opérations financières en toute sécurité.',
+        'apropos-mission': '🎯 Notre mission',
+        'apropos-mission-text': 'Rendre l\'information financière accessible à tous, permettre à chacun de connaître les vrais taux de change, de comprendre comment investir légalement, et de protéger la valeur de son argent dans un contexte économique difficile.',
+        'apropos-principes': '💡 Nos principes',
+        'principes-t1': 'Transparence : Les taux sont visibles et clairs',
+        'principes-t2': 'Sécurité : Nous vous orientons vers des structures agréées uniquement',
+        'principes-t3': 'Proximité : Une réponse proche de chez vous, au Niger',
+        'principes-t4': 'Éducation : Apprendre avant d\'investir ou d\'échanger',
+        'apropos-avert': '⚠️ TCHINJI n\'est pas un établissement bancaire et ne détient pas d\'argent pour le compte de ses clients. Toutes les opérations financières se font directement entre vous et la structure agréée de votre choix.',
+        'devises-title': '💱 Convertisseur de Devises',
+        'devises-calcule': 'Calculez votre montant',
+        'btn-calculer
